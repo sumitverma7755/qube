@@ -280,7 +280,7 @@
 
             <!-- Interactive Padlock Badge (Triple-tap for early preview) -->
             <div class="flex flex-col items-center justify-center mb-5">
-                <button id="lock-padlock-icon" type="button" title="Triple-tap to preview early"
+                <button id="lock-padlock-icon" type="button" title="Anniversary Lock"
                     class="group relative w-20 h-20 rounded-full bg-gradient-to-br from-rose-500/25 to-amber-500/20 border border-rose-300/35 flex items-center justify-center shadow-[0_0_35px_rgba(244,63,94,0.4)] hover:scale-105 active:scale-95 transition-all select-none cursor-pointer">
                     <span class="absolute inset-0 rounded-full bg-rose-500/20 animate-ping opacity-40"></span>
                     <svg class="w-9 h-9 text-amber-200 group-hover:text-rose-200 transition-colors" fill="none"
@@ -364,9 +364,7 @@
             </div>
 
             <p id="lock-status-hint" class="text-[11px] text-rose-300/55 mt-5">
-                Unlocks automatically at 11 November 2026, 12:00 AM Midnight • <span
-                    class="underline decoration-dotted cursor-pointer hover:text-rose-200"
-                    onclick="handlePadlockTap(true)">Secret hint: triple-tap the lock icon above to preview</span>
+                Unlocks automatically on 11 November 2026 at 12:00 AM Midnight ❤️
             </p>
         </div>
     </div>
@@ -1327,7 +1325,7 @@
             updateMidnightCountdown();
             const hintEl = document.getElementById('lock-status-hint');
             if (hintEl) {
-                hintEl.innerHTML = `Countdown Lock Active • <span class="underline decoration-dotted cursor-pointer text-amber-200 hover:text-white" onclick="unlockAnniversarySite(true)">Tap here or triple-tap the padlock icon to unlock</span>`;
+                hintEl.textContent = 'Countdown Lock Active • Unlocks 11 November at Midnight ❤️';
             }
         }
 
