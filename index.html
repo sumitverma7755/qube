@@ -370,6 +370,53 @@
                 100% { transform: scaleX(0.94) scaleY(1.05) rotate(2deg);  opacity: 0.97; }
             }
 
+    
+        /* Qube Privacy Shield — additive styles; does not alter existing animations */
+        #qube-privacy-watermark {
+            position: fixed; inset: 0; z-index: 125; pointer-events: none;
+            overflow: hidden; opacity: .16; user-select: none;
+            display: grid; place-items: center;
+        }
+        #qube-privacy-watermark::before {
+            content: attr(data-watermark);
+            position: absolute; inset: -30%;
+            display: flex; align-items: center; justify-content: center;
+            width: 160%; height: 160%;
+            transform: rotate(-24deg);
+            white-space: pre-wrap; text-align: center;
+            font: 600 clamp(18px, 2.2vw, 30px)/5.5 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: .08em; color: #fde68a;
+            text-shadow: 0 1px 12px rgba(251,113,133,.28);
+            background-image: repeating-linear-gradient(0deg, transparent 0 105px, transparent 105px 160px);
+            content: attr(data-watermark);
+        }
+        #qube-privacy-watermark::after {
+            content: attr(data-stamp);
+            position: absolute; right: 14px; bottom: 12px;
+            color: rgba(254,243,199,.72); font: 500 10px/1.4 'Plus Jakarta Sans',sans-serif;
+            letter-spacing: .08em; text-shadow: 0 1px 6px #040613;
+        }
+        #qube-privacy-veil {
+            position: fixed; inset: 0; z-index: 190; display: none;
+            align-items: center; justify-content: center; padding: 24px;
+            background: rgba(4,6,19,.58); -webkit-backdrop-filter: blur(22px);
+            backdrop-filter: blur(22px); color: #fef3c7; text-align: center;
+        }
+        #qube-privacy-veil.is-active { display: flex; }
+        #qube-privacy-toast {
+            position: fixed; z-index: 250; left: 50%; bottom: 24px;
+            transform: translateX(-50%) translateY(12px); opacity: 0;
+            pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+            max-width: min(92vw, 440px); padding: 12px 18px; border-radius: 16px;
+            border: 1px solid rgba(253,230,138,.35); background: rgba(11,16,38,.96);
+            color: #fef3c7; text-align: center; font: 500 13px/1.5 'Plus Jakarta Sans',sans-serif;
+            box-shadow: 0 12px 40px rgba(0,0,0,.4);
+        }
+        #qube-privacy-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+        @media print {
+            #qube-privacy-watermark, #qube-privacy-veil, #qube-privacy-toast { display: none !important; }
+        }
+
     </style>
 </head>
 
@@ -3503,6 +3550,84 @@
             initStardustCanvas();
         };
     </script>
+
+    <!-- Qube Privacy Shield: privacy blur, watermark and screenshot-shortcut deterrent -->
+    <div id="qube-privacy-watermark" aria-hidden="true"
+         data-watermark="Made only for Akanksha ❤️"
+         data-stamp="Made only for Akanksha ❤️"></div>
+    <div id="qube-privacy-veil" role="status" aria-live="polite">
+        <div class="astral-glass rounded-3xl p-8 max-w-md border border-stardust-200/30">
+            <div class="text-4xl mb-3">🌙</div>
+            <p class="font-serif text-2xl text-stardust-200 mb-2">A little moment of privacy</p>
+            <p class="text-sm text-slate-200">The starlight is resting while this page is away. Return to the page to continue. ❤️</p>
+        </div>
+    </div>
+    <div id="qube-privacy-toast" role="status" aria-live="polite"></div>
+    <script>
+    (() => {
+        'use strict';
+        const veil = document.getElementById('qube-privacy-veil');
+        const watermark = document.getElementById('qube-privacy-watermark');
+        const toast = document.getElementById('qube-privacy-toast');
+        if (!veil || !watermark || !toast) return;
+
+        const WATERMARK_TEXT = 'Made only for Akanksha ❤️';
+        const updateStamp = () => {
+            const stamp = new Intl.DateTimeFormat('en-IN', {
+                dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata'
+            }).format(new Date());
+            watermark.dataset.watermark = WATERMARK_TEXT;
+            watermark.dataset.stamp = WATERMARK_TEXT + ' • ' + stamp + ' IST';
+        };
+        updateStamp();
+        window.setInterval(updateStamp, 60000);
+
+        let toastTimer = 0;
+        const showWarning = (message) => {
+            toast.textContent = message;
+            toast.classList.add('is-visible');
+            window.clearTimeout(toastTimer);
+            toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 3200);
+        };
+
+        // Blur the experience whenever the tab is hidden or the browser loses focus.
+        // A short delay avoids flashing the veil during normal focus transitions.
+        let blurTimer = 0;
+        const activateVeil = () => {
+            window.clearTimeout(blurTimer);
+            blurTimer = window.setTimeout(() => veil.classList.add('is-active'), 120);
+        };
+        const deactivateVeil = () => {
+            window.clearTimeout(blurTimer);
+            if (document.visibilityState === 'visible' && document.hasFocus()) {
+                veil.classList.remove('is-active');
+            }
+        };
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState !== 'visible') activateVeil();
+            else deactivateVeil();
+        });
+        window.addEventListener('blur', activateVeil);
+        window.addEventListener('focus', deactivateVeil);
+        window.addEventListener('pageshow', deactivateVeil);
+
+        // Browser events cannot reliably identify screenshots on every OS/browser.
+        // This warning is a deterrent for common shortcut key combinations only.
+        window.addEventListener('keydown', (event) => {
+            const key = (event.key || '').toLowerCase();
+            const mac = /mac|iphone|ipad/i.test(navigator.platform || '');
+            const screenshotShortcut =
+                key === 'printscreen' ||
+                (mac && event.metaKey && event.shiftKey && ['3', '4', '5', '6'].includes(key)) ||
+                (!mac && event.metaKey && event.shiftKey && key === 's') ||
+                (event.ctrlKey && event.shiftKey && key === 's');
+            if (screenshotShortcut) {
+                showWarning('Please keep this little surprise private. Made only for Akanksha ❤️');
+            }
+        }, true);
+    })();
+    </script>
+
 </body>
 
 </html>
