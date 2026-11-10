@@ -3,8 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Written in the Stars — Happy 1 Month, Akanksha! ✨ | Sumit & Akanksha</title>
+    <meta property="og:title" content="Written in the Stars ✨">
+    <meta property="og:description" content="A special interactive experience, crafted with love.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#040613">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -1690,7 +1694,7 @@
             anniversaryDateLabel: "11 November 2026",
             partnerName: "Akanksha",
             yourName: "Sumit",
-            musicUrl: "./photos/music.mp3",
+            musicUrl: null, // mp3 not present — falls back to built-in synth music box
 
             constellationQuotes: [
                 "Star #1 Connected: 11 October 2026 — The night the universe quietly whispered your name to my heart.",
@@ -3445,14 +3449,14 @@
             if (congratsCard) { congratsCard.style.opacity='0'; congratsCard.style.transform='scale(0.92) translateY(16px)'; congratsCard.style.pointerEvents='none'; }
             if (instText)     { instText.textContent='Blow out the candle, make your secret wish \u2014 then slice our cake together to celebrate one beautiful month. \uD83D\uDD6F\uFE0F'; instText.style.color=''; }
             if (btnCandle) {
-                btnCandle.innerHTML='<span id="btn-candle-icon">\uD83D\uDD6F\uFE0F</span><span id="btn-candle-text">Make a Wish &amp; Blow Candle</span>';
+                btnCandle.innerHTML='<span>\uD83D\uDD6F\uFE0F</span><span>Make a Wish &amp; Blow Candle</span>';
                 btnCandle.style.background='linear-gradient(135deg,#fde68a,#f59e0b,#d97706)';
                 btnCandle.style.color='#451a03';
                 btnCandle.style.boxShadow='0 4px 20px rgba(245,158,11,0.4)';
                 btnCandle.style.pointerEvents='';
             }
             if (btnCut) {
-                btnCut.innerHTML='<span>\uD83D\uDD2A</span><span id="btn-cut-text">Cut the Cake</span>';
+                btnCut.innerHTML='<span>\uD83D\uDD2A</span><span>Cut the Cake</span>';
                 btnCut.classList.add('opacity-40','pointer-events-none');
                 btnCut.classList.remove('animate-pulse');
             }
