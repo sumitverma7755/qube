@@ -354,6 +354,18 @@
                 100% { transform: scaleX(0.95) scaleY(1.04) rotate(2deg);  opacity: 0.97; }
             }
 
+
+            /* ── PREMIUM CAKE SECTION ── */
+            .cake-flame-svg {
+                animation: cakeFlameFlicker 1.6s ease-in-out infinite alternate;
+            }
+            @keyframes cakeFlameFlicker {
+                0%   { transform: scaleX(1)    scaleY(1)    rotate(-2deg); opacity: 1;    }
+                30%  { transform: scaleX(0.88) scaleY(1.08) rotate(1.5deg); opacity: 0.94; }
+                60%  { transform: scaleX(1.07) scaleY(0.95) rotate(-1deg); opacity: 1;    }
+                100% { transform: scaleX(0.94) scaleY(1.05) rotate(2deg);  opacity: 0.97; }
+            }
+
     </style>
 </head>
 
@@ -1123,259 +1135,238 @@
                     <div class="absolute inset-0 rounded-3xl blur-xl scale-105 pointer-events-none" style="background:linear-gradient(180deg,rgba(244,63,94,0.18),transparent,rgba(245,158,11,0.08));"></div>
                     <div class="relative rounded-3xl px-4 pt-8 pb-6 border border-white/10 astral-glass" style="box-shadow:0 0 60px rgba(244,63,94,0.12),0 0 120px rgba(0,0,0,0.5);">
 
-                        <!-- CAKE SVG STAGE -->
-                        <div id="cake-interactive-stage" class="relative select-none" style="height:320px;">
-                            <svg id="cake-svg" viewBox="0 0 400 320" width="100%" height="100%"
+                        <!-- CAKE SVG STAGE — viewBox gives 60px headroom above cake for flame+candle -->
+                        <div id="cake-interactive-stage" class="relative select-none" style="height:360px;">
+                            <svg id="cake-svg" viewBox="0 0 400 360" width="100%" height="100%"
                                  style="overflow:visible;display:block;">
                                 <defs>
-                                    <!-- Bottom tier gradient (deep velvet rose) -->
                                     <linearGradient id="cBotSide" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#7f1d3c"/>
-                                        <stop offset="30%" stop-color="#be123c"/>
-                                        <stop offset="65%" stop-color="#e11d48"/>
+                                        <stop offset="0%"   stop-color="#7f1d3c"/>
+                                        <stop offset="30%"  stop-color="#be123c"/>
+                                        <stop offset="65%"  stop-color="#e11d48"/>
                                         <stop offset="100%" stop-color="#881337"/>
                                     </linearGradient>
                                     <linearGradient id="cBotTop" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#9f1239"/>
-                                        <stop offset="50%" stop-color="#be123c"/>
+                                        <stop offset="0%"   stop-color="#9f1239"/>
+                                        <stop offset="50%"  stop-color="#be123c"/>
                                         <stop offset="100%" stop-color="#9f1239"/>
                                     </linearGradient>
-                                    <!-- Top tier gradient (vanilla cream) -->
                                     <linearGradient id="cTopSide" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#ffe4e6"/>
-                                        <stop offset="50%" stop-color="#fff1f2"/>
+                                        <stop offset="0%"   stop-color="#ffe4e6"/>
+                                        <stop offset="50%"  stop-color="#fff1f2"/>
                                         <stop offset="100%" stop-color="#fecdd3"/>
                                     </linearGradient>
                                     <linearGradient id="cTopTop" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#fce7f3"/>
-                                        <stop offset="50%" stop-color="#fff1f2"/>
+                                        <stop offset="0%"   stop-color="#fce7f3"/>
+                                        <stop offset="50%"  stop-color="#fff1f2"/>
                                         <stop offset="100%" stop-color="#fce7f3"/>
                                     </linearGradient>
-                                    <!-- Gold banner -->
                                     <linearGradient id="cGold" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#92400e"/>
-                                        <stop offset="30%" stop-color="#d97706"/>
-                                        <stop offset="50%" stop-color="#fde68a"/>
-                                        <stop offset="70%" stop-color="#d97706"/>
+                                        <stop offset="0%"   stop-color="#92400e"/>
+                                        <stop offset="30%"  stop-color="#d97706"/>
+                                        <stop offset="50%"  stop-color="#fde68a"/>
+                                        <stop offset="70%"  stop-color="#d97706"/>
                                         <stop offset="100%" stop-color="#92400e"/>
                                     </linearGradient>
-                                    <!-- Plate marble -->
                                     <linearGradient id="cPlate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#312e81"/>
-                                        <stop offset="50%" stop-color="#1e1b4b"/>
+                                        <stop offset="0%"   stop-color="#312e81"/>
+                                        <stop offset="50%"  stop-color="#1e1b4b"/>
                                         <stop offset="100%" stop-color="#0f0d2a"/>
                                     </linearGradient>
-                                    <!-- Pedestal -->
                                     <linearGradient id="cPedestal" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#f59e0b"/>
+                                        <stop offset="0%"   stop-color="#f59e0b"/>
                                         <stop offset="100%" stop-color="#78350f"/>
                                     </linearGradient>
-                                    <!-- Knife blade -->
                                     <linearGradient id="cKnifeBlade" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#9ca3af"/>
-                                        <stop offset="35%" stop-color="#f9fafb"/>
-                                        <stop offset="65%" stop-color="#e5e7eb"/>
+                                        <stop offset="0%"   stop-color="#9ca3af"/>
+                                        <stop offset="35%"  stop-color="#f9fafb"/>
+                                        <stop offset="65%"  stop-color="#e5e7eb"/>
                                         <stop offset="100%" stop-color="#6b7280"/>
                                     </linearGradient>
-                                    <!-- Knife handle (pearl) -->
                                     <linearGradient id="cKnifeHandle" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#f0fdf4"/>
-                                        <stop offset="40%" stop-color="#fef9ee"/>
+                                        <stop offset="0%"   stop-color="#f0fdf4"/>
+                                        <stop offset="40%"  stop-color="#fef9ee"/>
                                         <stop offset="100%" stop-color="#e0e7ff"/>
                                     </linearGradient>
-                                    <!-- Candle body -->
                                     <linearGradient id="cCandleBody" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#d97706"/>
-                                        <stop offset="40%" stop-color="#fde68a"/>
+                                        <stop offset="0%"   stop-color="#d97706"/>
+                                        <stop offset="40%"  stop-color="#fde68a"/>
                                         <stop offset="100%" stop-color="#b45309"/>
                                     </linearGradient>
-                                    <!-- Sponge cross-section layers -->
+                                    <!-- Sponge cross-section with sharp cake layers -->
                                     <linearGradient id="cSponge" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%"   stop-color="#fce7f3"/>
-                                        <stop offset="15%"  stop-color="#fce7f3"/>
-                                        <stop offset="15%"  stop-color="#e11d48"/>
-                                        <stop offset="35%"  stop-color="#e11d48"/>
-                                        <stop offset="35%"  stop-color="#fce7f3"/>
-                                        <stop offset="50%"  stop-color="#fce7f3"/>
-                                        <stop offset="50%"  stop-color="#9f1239"/>
-                                        <stop offset="70%"  stop-color="#be123c"/>
-                                        <stop offset="70%"  stop-color="#fce7f3"/>
-                                        <stop offset="80%"  stop-color="#fce7f3"/>
-                                        <stop offset="80%"  stop-color="#be123c"/>
+                                        <stop offset="12%"  stop-color="#fce7f3"/>
+                                        <stop offset="12%"  stop-color="#e11d48"/>
+                                        <stop offset="30%"  stop-color="#e11d48"/>
+                                        <stop offset="30%"  stop-color="#fce7f3"/>
+                                        <stop offset="45%"  stop-color="#fce7f3"/>
+                                        <stop offset="45%"  stop-color="#9f1239"/>
+                                        <stop offset="65%"  stop-color="#be123c"/>
+                                        <stop offset="65%"  stop-color="#fce7f3"/>
+                                        <stop offset="78%"  stop-color="#fce7f3"/>
+                                        <stop offset="78%"  stop-color="#be123c"/>
                                         <stop offset="100%" stop-color="#9f1239"/>
                                     </linearGradient>
-                                    <!-- Candle flame glow filter -->
-                                    <filter id="cFlameGlow" x="-80%" y="-80%" width="260%" height="260%">
-                                        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+                                    <filter id="cFlameGlow" x="-100%" y="-100%" width="300%" height="300%">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
                                         <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                                     </filter>
-                                    <filter id="cKnifeGlow" x="-20%" y="-5%" width="140%" height="110%">
-                                        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-                                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                    </filter>
-                                    <!-- Soft shadow filter -->
                                     <filter id="cShadow" x="-10%" y="-10%" width="120%" height="140%">
                                         <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="rgba(0,0,0,0.5)"/>
                                     </filter>
                                 </defs>
 
-                                <!-- ── PLATE & STAND ── -->
-                                <!-- Drop shadow -->
-                                <ellipse cx="200" cy="296" rx="130" ry="10" fill="rgba(0,0,0,0.5)" filter="url(#cShadow)"/>
-                                <!-- Stand column -->
-                                <rect x="188" y="272" width="24" height="18" rx="3" fill="url(#cPedestal)"/>
-                                <!-- Plate rim -->
-                                <ellipse cx="200" cy="272" rx="140" ry="14" fill="url(#cPlate)" stroke="rgba(253,230,138,0.5)" stroke-width="2"/>
-                                <ellipse cx="200" cy="271" rx="130" ry="11" fill="none" stroke="rgba(253,230,138,0.2)" stroke-width="1" stroke-dasharray="5 4"/>
+                                <!-- ══ PLATE & PEDESTAL ══ (bottom: y=330-350) -->
+                                <ellipse cx="200" cy="346" rx="130" ry="10" fill="rgba(0,0,0,0.45)" filter="url(#cShadow)"/>
+                                <rect x="188" y="322" width="24" height="20" rx="3" fill="url(#cPedestal)"/>
+                                <ellipse cx="200" cy="322" rx="140" ry="14" fill="url(#cPlate)" stroke="rgba(253,230,138,0.5)" stroke-width="2.5"/>
+                                <ellipse cx="200" cy="321" rx="130" ry="11" fill="none" stroke="rgba(253,230,138,0.2)" stroke-width="1" stroke-dasharray="5 4"/>
 
-                                <!-- ── BOTTOM TIER BODY ── -->
-                                <!-- Side face -->
-                                <path d="M 72 185 L 72 258 C 72 272, 328 272, 328 258 L 328 185 Z" fill="url(#cBotSide)"/>
-                                <!-- Velvet texture lines -->
-                                <path d="M 72 200 L 328 200" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                                <path d="M 72 215 L 328 215" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                                <path d="M 72 230 L 328 230" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                                <path d="M 72 245 L 328 245" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                                <!-- Left shadow band -->
-                                <path d="M 72 185 L 72 258 C 72 272, 110 272, 110 258 L 110 185 Z" fill="rgba(0,0,0,0.18)"/>
-                                <!-- Right shadow band -->
-                                <path d="M 290 185 L 290 258 C 290 272, 328 272, 328 258 L 328 185 Z" fill="rgba(0,0,0,0.12)"/>
-
-                                <!-- Cream drip top of bottom tier -->
-                                <path d="M 72 192 C 90 192,93 206,112 206 C 131 206,134 192,152 192 C 170 192,173 207,192 207 C 211 207,214 192,232 192 C 250 192,253 206,272 206 C 291 206,294 192,310 192 C 318 192,323 192,328 192" fill="none" stroke="#fdf2f8" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
-
-                                <!-- Gold banner plaque -->
-                                <rect x="112" y="225" width="176" height="22" rx="11" fill="url(#cGold)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                                <text x="200" y="240" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-weight="700" font-size="11" fill="#451a03" letter-spacing="1.5">Sumit ❤ Akanksha · 1 Month</text>
-
+                                <!-- ══ BOTTOM TIER ══ (y=225 to y=308) -->
+                                <!-- Side body with rounded bottom -->
+                                <path d="M 72 235 L 72 308 C 72 322, 328 322, 328 308 L 328 235 Z" fill="url(#cBotSide)"/>
+                                <!-- Depth shadow bands -->
+                                <path d="M 72 235 L 72 308 C 72 322, 108 322, 108 308 L 108 235 Z" fill="rgba(0,0,0,0.2)"/>
+                                <path d="M 292 235 L 292 308 C 292 322, 328 322, 328 308 L 328 235 Z" fill="rgba(0,0,0,0.14)"/>
+                                <!-- Velvet horizontal texture lines -->
+                                <line x1="72" y1="250" x2="328" y2="250" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                                <line x1="72" y1="265" x2="328" y2="265" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                                <line x1="72" y1="280" x2="328" y2="280" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                                <line x1="72" y1="295" x2="328" y2="295" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                                <!-- Cream drip wave across top of bottom tier -->
+                                <path d="M 72 243 C 90 243,94 257,112 257 C 130 257,134 243,152 243 C 170 243,174 258,192 258 C 210 258,214 243,232 243 C 250 243,254 257,272 257 C 290 257,294 243,310 243 C 318 243,323 243,328 243"
+                                      fill="none" stroke="#fdf2f8" stroke-width="6" stroke-linecap="round" opacity="0.92"/>
+                                <!-- Gold plaque banner -->
+                                <rect x="112" y="275" width="176" height="22" rx="11" fill="url(#cGold)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                                <text x="200" y="290" text-anchor="middle" font-family="'Cormorant Garamond',serif"
+                                      font-weight="700" font-size="11" fill="#451a03" letter-spacing="1.5">Sumit ❤ Akanksha · 1 Month</text>
                                 <!-- Gold pearls bottom row -->
                                 <g fill="#fde68a">
-                                    <circle cx="90"  cy="264" r="4"/>
-                                    <circle cx="118" cy="267" r="4"/>
-                                    <circle cx="150" cy="269" r="4"/>
-                                    <circle cx="183" cy="270" r="4"/>
-                                    <circle cx="200" cy="271" r="4"/>
-                                    <circle cx="217" cy="270" r="4"/>
-                                    <circle cx="250" cy="269" r="4"/>
-                                    <circle cx="282" cy="267" r="4"/>
-                                    <circle cx="310" cy="264" r="4"/>
+                                    <circle cx="90"  cy="314" r="4"/>
+                                    <circle cx="118" cy="317" r="4"/>
+                                    <circle cx="150" cy="319" r="4"/>
+                                    <circle cx="183" cy="320" r="4"/>
+                                    <circle cx="200" cy="321" r="4"/>
+                                    <circle cx="217" cy="320" r="4"/>
+                                    <circle cx="250" cy="319" r="4"/>
+                                    <circle cx="282" cy="317" r="4"/>
+                                    <circle cx="310" cy="314" r="4"/>
                                 </g>
+                                <!-- Bottom tier 3D top cap (ellipse) -->
+                                <ellipse cx="200" cy="235" rx="128" ry="22" fill="url(#cBotTop)" stroke="rgba(251,113,133,0.6)" stroke-width="2"/>
+                                <ellipse cx="200" cy="233" rx="90" ry="12" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
 
-                                <!-- Bottom tier TOP ellipse (3D cap) -->
-                                <ellipse cx="200" cy="185" rx="128" ry="22" fill="url(#cBotTop)" stroke="rgba(251,113,133,0.6)" stroke-width="2"/>
-                                <!-- Highlight on top ellipse -->
-                                <ellipse cx="200" cy="183" rx="90" ry="12" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-
-                                <!-- ── TOP TIER BODY ── -->
-                                <!-- Side face -->
-                                <path d="M 128 115 L 128 178 C 128 190, 272 190, 272 178 L 272 115 Z" fill="url(#cTopSide)"/>
-                                <!-- Left shadow -->
-                                <path d="M 128 115 L 128 178 C 128 190, 155 190, 155 178 L 155 115 Z" fill="rgba(0,0,0,0.1)"/>
-                                <!-- Right shadow -->
-                                <path d="M 245 115 L 245 178 C 245 190, 272 190, 272 178 L 272 115 Z" fill="rgba(0,0,0,0.08)"/>
-
-                                <!-- Rose gold band on top tier -->
-                                <rect x="128" y="162" width="144" height="18" fill="rgba(249,168,212,0.7)"/>
+                                <!-- ══ TOP TIER ══ (y=155 to y=228) -->
+                                <path d="M 128 165 L 128 228 C 128 240, 272 240, 272 228 L 272 165 Z" fill="url(#cTopSide)"/>
+                                <!-- Depth shadows -->
+                                <path d="M 128 165 L 128 228 C 128 240, 155 240, 155 228 L 155 165 Z" fill="rgba(0,0,0,0.1)"/>
+                                <path d="M 245 165 L 245 228 C 245 240, 272 240, 272 228 L 272 165 Z" fill="rgba(0,0,0,0.08)"/>
+                                <!-- Rose gold detail band -->
+                                <rect x="128" y="212" width="144" height="18" fill="rgba(249,168,212,0.75)"/>
                                 <!-- Pearl beads on band -->
                                 <g fill="white" opacity="0.9">
-                                    <circle cx="145" cy="171" r="3.5"/>
-                                    <circle cx="167" cy="171" r="3.5"/>
-                                    <circle cx="189" cy="171" r="3.5"/>
-                                    <circle cx="211" cy="171" r="3.5"/>
-                                    <circle cx="233" cy="171" r="3.5"/>
-                                    <circle cx="255" cy="171" r="3.5"/>
+                                    <circle cx="145" cy="221" r="3.5"/>
+                                    <circle cx="167" cy="221" r="3.5"/>
+                                    <circle cx="189" cy="221" r="3.5"/>
+                                    <circle cx="211" cy="221" r="3.5"/>
+                                    <circle cx="233" cy="221" r="3.5"/>
+                                    <circle cx="255" cy="221" r="3.5"/>
                                 </g>
-
-                                <!-- Floral motifs on top tier -->
-                                <text x="168" y="155" font-size="16" text-anchor="middle" opacity="0.7">🌸</text>
-                                <text x="200" y="158" font-size="16" text-anchor="middle" opacity="0.7">🌸</text>
-                                <text x="232" y="155" font-size="16" text-anchor="middle" opacity="0.7">🌸</text>
-
+                                <!-- Floral motifs -->
+                                <text x="168" y="205" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
+                                <text x="200" y="208" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
+                                <text x="232" y="205" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
                                 <!-- Top tier frosting drip -->
-                                <path d="M 128 122 C 140 122,143 132,154 132 C 165 132,168 122,179 122 C 190 122,193 132,204 132 C 215 132,218 122,229 122 C 240 122,243 132,254 132 C 265 132,268 122,272 122" fill="none" stroke="rgba(253,242,248,0.9)" stroke-width="5" stroke-linecap="round"/>
+                                <path d="M 128 173 C 140 173,143 183,154 183 C 165 183,168 173,179 173 C 190 173,193 183,204 183 C 215 183,218 173,229 173 C 240 173,243 183,254 183 C 265 183,268 173,272 173"
+                                      fill="none" stroke="rgba(253,242,248,0.9)" stroke-width="5" stroke-linecap="round"/>
+                                <!-- Top tier 3D cap -->
+                                <ellipse cx="200" cy="165" rx="72" ry="16" fill="url(#cTopTop)" stroke="rgba(251,207,232,0.7)" stroke-width="2"/>
+                                <ellipse cx="200" cy="164" rx="52" ry="10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
 
-                                <!-- Top tier TOP ellipse -->
-                                <ellipse cx="200" cy="115" rx="72" ry="16" fill="url(#cTopTop)" stroke="rgba(251,207,232,0.7)" stroke-width="2"/>
-                                <ellipse cx="200" cy="114" rx="52" ry="10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-
-                                <!-- ── CAKE SLICE CUT REVEAL (hidden, shown after slice) ── -->
+                                <!-- ══ SLICE CUT REVEAL ══ (right side, hidden until sliced) -->
                                 <g id="cake-cut-reveal" opacity="0" style="transition:opacity 0.7s ease;">
-                                    <!-- Sponge cross section -->
-                                    <path d="M 268 115 L 310 132 L 316 265 L 268 258 Z" fill="url(#cSponge)" stroke="rgba(253,230,138,0.6)" stroke-width="1.5"/>
-                                    <!-- Cream layers visible -->
-                                    <line x1="268" y1="130" x2="310" y2="145" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="160" x2="312" y2="175" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="195" x2="314" y2="210" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="230" x2="315" y2="244" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
+                                    <path d="M 268 165 L 310 182 L 316 315 L 268 308 Z" fill="url(#cSponge)" stroke="rgba(253,230,138,0.6)" stroke-width="1.5"/>
+                                    <line x1="268" y1="181" x2="310" y2="196" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
+                                    <line x1="268" y1="212" x2="312" y2="226" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
+                                    <line x1="268" y1="248" x2="314" y2="262" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
+                                    <line x1="268" y1="280" x2="315" y2="294" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
                                 </g>
 
-                                <!-- ── CANDLE GROUP ── (clickable, sits on top of cake) -->
-                                <g id="cake-candle-group" class="cursor-pointer" onclick="handleCandleDirectTap()" title="Tap to blow out candle" style="cursor:pointer;">
+                                <!-- ══ CANDLE GROUP ══ (y=100-162 candle body, flame y=60-100) -->
+                                <!-- candle sits ON TOP of the cake: top tier cap at y=149-181, so candle starts at y=100 -->
+                                <g id="cake-candle-group" style="cursor:pointer;" onclick="handleCandleDirectTap()" title="Tap to blow out candle">
 
-                                    <!-- Candle body -->
-                                    <rect x="194" y="60" width="12" height="52" rx="2" fill="url(#cCandleBody)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-                                    <!-- Red stripe spirals -->
-                                    <line x1="194" y1="69"  x2="206" y2="65"  stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="81"  x2="206" y2="77"  stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="93"  x2="206" y2="89"  stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="105" x2="206" y2="101" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <!-- Highlight on candle -->
-                                    <rect x="196" y="62" width="3" height="48" rx="1" fill="rgba(255,255,255,0.3)"/>
+                                    <!-- Candle body: x=194-206, y=108-162 -->
+                                    <rect x="194" y="110" width="12" height="52" rx="2" fill="url(#cCandleBody)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                    <!-- Spiral red stripes -->
+                                    <line x1="194" y1="119" x2="206" y2="115" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                                    <line x1="194" y1="131" x2="206" y2="127" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                                    <line x1="194" y1="143" x2="206" y2="139" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                                    <line x1="194" y1="155" x2="206" y2="151" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                                    <!-- Candle highlight -->
+                                    <rect x="196" y="112" width="3" height="48" rx="1" fill="rgba(255,255,255,0.3)"/>
                                     <!-- Wax drip -->
-                                    <path d="M 198 108 C 197 112, 196 116, 197 118 C 198 120, 200 120, 201 118 C 202 116, 201 112, 200 108 Z" fill="rgba(253,230,138,0.7)"/>
-
+                                    <path d="M 198 158 C 197 162,196 166,197 168 C 198 170,200 170,201 168 C 202 166,201 162,200 158 Z" fill="rgba(253,230,138,0.7)"/>
                                     <!-- Wick -->
-                                    <line x1="200" y1="60" x2="200" y2="53" stroke="#374151" stroke-width="1.5" stroke-linecap="round"/>
+                                    <line x1="200" y1="110" x2="200" y2="103" stroke="#374151" stroke-width="1.5" stroke-linecap="round"/>
 
-                                    <!-- Flame + glow wrapper -->
-                                    <g id="candle-flame-wrapper" style="transition:transform 0.4s,opacity 0.4s;transform-origin:200px 60px;">
-                                        <!-- Outer ambient glow -->
-                                        <circle cx="200" cy="38" r="20" fill="rgba(253,230,138,0.2)" filter="url(#cFlameGlow)"/>
-                                        <!-- Flame outer (amber) -->
-                                        <path class="cake-flame-svg" d="M 200 18 C 207 28, 211 38, 209 46 C 207 52, 193 52, 191 46 C 189 38, 193 28, 200 18 Z"
-                                              fill="#f59e0b" filter="url(#cFlameGlow)" style="transform-origin:200px 50px;"/>
-                                        <!-- Flame inner (cream) -->
-                                        <path d="M 200 24 C 204 32, 207 40, 205 46 C 203 50, 197 50, 195 46 C 193 40, 196 32, 200 24 Z" fill="#fef3c7"/>
+                                    <!-- Flame wrapper (y=65-103) — well above the cake -->
+                                    <g id="candle-flame-wrapper" style="transition:transform 0.4s,opacity 0.4s;transform-origin:200px 110px;">
+                                        <!-- Outer ambient glow halo -->
+                                        <circle cx="200" cy="85" r="22" fill="rgba(253,230,138,0.18)" filter="url(#cFlameGlow)"/>
+                                        <!-- Flame outer amber -->
+                                        <path class="cake-flame-svg"
+                                              d="M 200 65 C 207 76,212 87,210 95 C 208 101,192 101,190 95 C 188 87,193 76,200 65 Z"
+                                              fill="#f59e0b" filter="url(#cFlameGlow)" style="transform-origin:200px 100px;"/>
+                                        <!-- Flame inner cream -->
+                                        <path d="M 200 72 C 205 81,208 90,206 96 C 204 100,196 100,194 96 C 192 90,195 81,200 72 Z" fill="#fef3c7"/>
                                         <!-- Flame bright core -->
-                                        <ellipse cx="200" cy="30" rx="4" ry="6" fill="white" opacity="0.85"/>
+                                        <ellipse cx="200" cy="80" rx="4" ry="6" fill="white" opacity="0.9"/>
                                     </g>
 
-                                    <!-- Smoke (shown after blow-out) -->
-                                    <g id="candle-smoke" opacity="0" class="pointer-events-none" style="transition:opacity 0.7s,transform 0.9s;transform-origin:200px 50px;">
-                                        <path d="M 200 50 Q 195 40, 202 30 Q 208 20, 198 10 Q 192 2, 200 -6"
-                                              fill="none" stroke="rgba(203,213,225,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 4"/>
+                                    <!-- Smoke curl (hidden until blown) -->
+                                    <g id="candle-smoke" opacity="0" class="pointer-events-none"
+                                       style="transition:opacity 0.7s,transform 0.9s;transform-origin:200px 103px;">
+                                        <path d="M 200 100 Q 194 88,202 76 Q 209 64,198 52 Q 191 42,200 32"
+                                              fill="none" stroke="rgba(203,213,225,0.7)" stroke-width="2.5"
+                                              stroke-linecap="round" stroke-dasharray="5 4"/>
                                     </g>
                                 </g>
 
-                                <!-- ── GOLD KNIFE ── (hidden until candle blown) -->
+                                <!-- ══ KNIFE ══ (initially offset right + rotated, slides in after candle blown) -->
                                 <g id="cake-knife-graphic" opacity="0"
-                                   style="transform:translate(60px,0px) rotate(-32deg);transform-origin:290px 80px;transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
-                                    <!-- Blade -->
-                                    <path d="M 285 65 L 296 65 L 300 185 L 281 185 Z" fill="url(#cKnifeBlade)"/>
-                                    <!-- Blade spine highlight -->
-                                    <line x1="287" y1="68" x2="284" y2="182" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+                                   style="transform:translate(55px,-10px) rotate(-30deg);transform-origin:300px 130px;
+                                          transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+                                          filter:drop-shadow(0 4px 14px rgba(0,0,0,0.6));">
+                                    <!-- Blade (y=120-240) -->
+                                    <path d="M 292 120 L 302 120 L 306 240 L 288 240 Z" fill="url(#cKnifeBlade)"/>
+                                    <!-- Blade edge highlight -->
+                                    <line x1="294" y1="123" x2="290" y2="237" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" stroke-linecap="round"/>
                                     <!-- Blade shine -->
-                                    <path d="M 290 72 L 295 72 L 297 150 L 288 150 Z" fill="rgba(255,255,255,0.12)"/>
-                                    <!-- Bolster (guard) -->
-                                    <rect x="279" y="58" width="22" height="9" rx="3" fill="#92400e" stroke="rgba(253,230,138,0.5)" stroke-width="1"/>
-                                    <!-- Handle (pearl white-gold) -->
-                                    <rect x="281" y="2" width="18" height="58" rx="5" fill="url(#cKnifeHandle)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                                    <!-- Handle texture -->
-                                    <line x1="283" y1="15" x2="297" y2="15" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                    <line x1="283" y1="28" x2="297" y2="28" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                    <line x1="283" y1="41" x2="297" y2="41" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                    <path d="M 296 128 L 301 128 L 303 205 L 294 205 Z" fill="rgba(255,255,255,0.1)"/>
+                                    <!-- Bolster guard -->
+                                    <rect x="286" y="113" width="22" height="9" rx="3" fill="#92400e" stroke="rgba(253,230,138,0.5)" stroke-width="1"/>
+                                    <!-- Handle (pearl / white-gold) -->
+                                    <rect x="288" y="55" width="18" height="60" rx="5" fill="url(#cKnifeHandle)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                                    <!-- Handle texture lines -->
+                                    <line x1="290" y1="69"  x2="304" y2="69"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                    <line x1="290" y1="82"  x2="304" y2="82"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                    <line x1="290" y1="95"  x2="304" y2="95"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
                                     <!-- Gold rivets -->
-                                    <circle cx="290" cy="12" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
-                                    <circle cx="290" cy="43" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
-                                    <!-- Handle cap -->
-                                    <ellipse cx="290" cy="4" rx="9" ry="4" fill="#f59e0b" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                    <circle cx="297" cy="65" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
+                                    <circle cx="297" cy="98" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
+                                    <!-- Handle top cap -->
+                                    <ellipse cx="297" cy="57" rx="9" ry="4" fill="#f59e0b" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
                                 </g>
 
                             </svg>
 
-                            <!-- Served slice (bottom-right, appears after cut) -->
-                            <div id="served-slice-plate" class="absolute right-1 bottom-1 w-28 pointer-events-none rounded-2xl p-3 text-center border border-rose-300/25 shadow-xl"
-                                 style="opacity:0;transform:translateY(16px) scale(0.9);transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);background:linear-gradient(135deg,rgba(15,10,30,0.97),rgba(30,15,40,0.97));">
+                            <!-- Served slice (bottom-right corner, slides in after cut) -->
+                            <div id="served-slice-plate" class="absolute right-1 bottom-2 w-28 pointer-events-none rounded-2xl p-3 text-center border border-rose-300/25 shadow-xl"
+                                 style="opacity:0;transform:translateY(16px) scale(0.9);
+                                        transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+                                        background:linear-gradient(135deg,rgba(15,10,30,0.97),rgba(30,15,40,0.97));">
                                 <div class="text-xs font-serif uppercase tracking-widest mb-1" style="color:#fda4af;">Your Slice</div>
                                 <div class="text-3xl" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));">🍰</div>
                                 <div class="text-[10px] mt-1 leading-tight" style="color:#fbcfe8;">First bite<br>for Akanksha ❤</div>
@@ -1408,7 +1399,11 @@
 
                 <!-- Congrats card (revealed after cake cut) -->
                 <div id="cake-congrats-card" class="mt-8 mx-auto max-w-md rounded-2xl px-6 py-6 text-center pointer-events-none"
-                     style="opacity:0;transform:scale(0.92) translateY(16px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);background:linear-gradient(135deg,rgba(159,18,57,0.25),rgba(10,8,25,0.92),rgba(120,53,15,0.2));border:1px solid rgba(253,230,138,0.22);box-shadow:0 0 40px rgba(244,63,94,0.12),0 20px 60px rgba(0,0,0,0.5);">
+                     style="opacity:0;transform:scale(0.92) translateY(16px);
+                            transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+                            background:linear-gradient(135deg,rgba(159,18,57,0.25),rgba(10,8,25,0.92),rgba(120,53,15,0.2));
+                            border:1px solid rgba(253,230,138,0.22);
+                            box-shadow:0 0 40px rgba(244,63,94,0.12),0 20px 60px rgba(0,0,0,0.5);">
                     <div class="mx-auto mb-4 w-16 h-px" style="background:linear-gradient(90deg,transparent,rgba(253,230,138,0.7),transparent);"></div>
                     <p class="font-script text-3xl sm:text-4xl" style="color:#fde68a;text-shadow:0 0 20px rgba(253,230,138,0.4);">Happy 1 Month, Akanksha!</p>
                     <div class="my-3 text-2xl">🎂 ❤️ 🌟</div>
@@ -1421,7 +1416,7 @@
 
             </div><!-- /max-w-3xl -->
 
-            <!-- Full-screen celebration overlay -->
+            <!-- Full-screen celebration overlay (brief flash on cake cut) -->
             <div id="cake-celebration-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center pointer-events-none"
                  style="opacity:0;transition:opacity 0.5s ease;background:radial-gradient(ellipse at center,rgba(159,18,57,0.3) 0%,rgba(0,0,0,0) 70%);">
                 <div id="cake-overlay-text" class="text-center px-6"
@@ -3335,7 +3330,7 @@
         /* =====================================================================
            VIRTUAL 1-MONTH ANNIVERSARY CAKE CEREMONY LOGIC (#cake-section)
            ===================================================================== */
-        let cakeCeremonyState = 'candle_lit'; // 'candle_lit' | 'candle_blown' | 'cake_sliced'
+        let cakeCeremonyState = 'candle_lit';
 
         function handleCandleDirectTap() {
             if (cakeCeremonyState === 'candle_lit') blowOutAnniversaryCandle();
@@ -3349,7 +3344,6 @@
         function blowOutAnniversaryCandle() {
             if (cakeCeremonyState !== 'candle_lit') return;
             cakeCeremonyState = 'candle_blown';
-
             const flame     = document.getElementById('candle-flame-wrapper');
             const smoke     = document.getElementById('candle-smoke');
             const knife     = document.getElementById('cake-knife-graphic');
@@ -3357,37 +3351,20 @@
             const btnCandle = document.getElementById('btn-candle-action');
             const btnCut    = document.getElementById('btn-cut-action');
 
-            // Extinguish flame
             if (flame) { flame.style.transform = 'scale(0)'; flame.style.opacity = '0'; }
-
-            // Smoke rises then fades
             if (smoke) {
                 smoke.style.opacity = '1';
                 setTimeout(() => { smoke.style.opacity = '0'; smoke.style.transform = 'translateY(-20px)'; }, 1200);
             }
-
-            // Wind-chime chord
             [523.25, 659.25, 783.99, 1046.5].forEach((f, i) =>
                 setTimeout(() => playCelestialNote(f, 0.17), i * 100));
-
-            // Stardust sparkle
             const stage = document.getElementById('cake-interactive-stage');
             if (stage) {
                 const r = stage.getBoundingClientRect();
-                spawnStardustBurst(r.left + r.width / 2, r.top + 50, 22);
+                spawnStardustBurst(r.left + r.width / 2, r.top + 80, 22);
             }
-
-            // Knife slides into position
-            if (knife) {
-                knife.style.opacity = '1';
-                knife.style.transform = 'translate(0px, 30px) rotate(-18deg)';
-            }
-
-            // Update text
-            if (instText) {
-                instText.textContent = 'Your wish floats up to the stars \u2728 Now take the knife and slice our cake together!';
-                instText.style.color = '#fde68a';
-            }
+            if (knife) { knife.style.opacity = '1'; knife.style.transform = 'translate(0px,30px) rotate(-18deg)'; }
+            if (instText) { instText.textContent = 'Your wish floats up to the stars \u2728 Now take the knife and slice our cake together!'; instText.style.color = '#fde68a'; }
             if (btnCandle) {
                 btnCandle.innerHTML = '<span>\u2728</span><span>Wish Made!</span>';
                 btnCandle.style.background = 'linear-gradient(135deg,#10b981,#059669)';
@@ -3395,16 +3372,12 @@
                 btnCandle.style.boxShadow = '0 4px 20px rgba(16,185,129,0.4)';
                 btnCandle.style.pointerEvents = 'none';
             }
-            if (btnCut) {
-                btnCut.classList.remove('opacity-40', 'pointer-events-none');
-                btnCut.classList.add('animate-pulse');
-            }
+            if (btnCut) { btnCut.classList.remove('opacity-40','pointer-events-none'); btnCut.classList.add('animate-pulse'); }
         }
 
         function sliceAnniversaryCake() {
             if (cakeCeremonyState === 'cake_sliced') { launchCakeCelebrationBite(); return; }
             cakeCeremonyState = 'cake_sliced';
-
             const knife        = document.getElementById('cake-knife-graphic');
             const cutReveal    = document.getElementById('cake-cut-reveal');
             const servedPlate  = document.getElementById('served-slice-plate');
@@ -3412,92 +3385,44 @@
             const instText     = document.getElementById('cake-instruction-text');
             const btnCut       = document.getElementById('btn-cut-action');
 
-            // Knife slices down
             if (knife) {
-                knife.style.transition = 'opacity 0.6s ease, transform 0.5s cubic-bezier(0.25,1,0.5,1)';
-                knife.style.transform = 'translate(0px, 110px) rotate(0deg)';
-                setTimeout(() => {
-                    knife.style.transform = 'translate(30px, 80px) rotate(25deg)';
-                    knife.style.opacity = '0';
-                }, 700);
+                knife.style.transition = 'opacity 0.6s ease,transform 0.5s cubic-bezier(0.25,1,0.5,1)';
+                knife.style.transform = 'translate(0px,120px) rotate(0deg)';
+                setTimeout(() => { knife.style.transform = 'translate(30px,90px) rotate(28deg)'; knife.style.opacity = '0'; }, 700);
             }
-
-            // Slice whoosh + celebratory chord
             playCelestialNote(392, 0.1);
-            setTimeout(() => {
-                [523.25, 659.25, 783.99, 880, 1046.5].forEach((f, i) =>
-                    setTimeout(() => playCelestialNote(f, 0.24), i * 80));
-            }, 320);
-
-            // Reveal sponge layers
+            setTimeout(() => { [523.25,659.25,783.99,880,1046.5].forEach((f,i) => setTimeout(() => playCelestialNote(f,0.24), i*80)); }, 320);
             if (cutReveal) setTimeout(() => { cutReveal.style.opacity = '1'; }, 480);
-
-            // Served slice slides in
-            if (servedPlate) {
-                setTimeout(() => {
-                    servedPlate.style.opacity = '1';
-                    servedPlate.style.transform = 'translateY(0) scale(1)';
-                    servedPlate.style.pointerEvents = 'auto';
-                }, 750);
-            }
-
-            // Congrats card
-            if (congratsCard) {
-                setTimeout(() => {
-                    congratsCard.style.opacity = '1';
-                    congratsCard.style.transform = 'scale(1) translateY(0)';
-                    congratsCard.style.pointerEvents = 'auto';
-                }, 950);
-            }
-
-            // Full-screen flash
+            if (servedPlate) setTimeout(() => { servedPlate.style.opacity='1'; servedPlate.style.transform='translateY(0) scale(1)'; servedPlate.style.pointerEvents='auto'; }, 750);
+            if (congratsCard) setTimeout(() => { congratsCard.style.opacity='1'; congratsCard.style.transform='scale(1) translateY(0)'; congratsCard.style.pointerEvents='auto'; }, 950);
             setTimeout(() => {
-                const overlay    = document.getElementById('cake-celebration-overlay');
+                const overlay = document.getElementById('cake-celebration-overlay');
                 const overlayTxt = document.getElementById('cake-overlay-text');
                 if (overlay) {
                     overlay.style.opacity = '1';
                     if (overlayTxt) overlayTxt.style.transform = 'scale(1)';
-                    setTimeout(() => {
-                        overlay.style.opacity = '0';
-                        if (overlayTxt) overlayTxt.style.transform = 'scale(0.7)';
-                    }, 2200);
+                    setTimeout(() => { overlay.style.opacity='0'; if(overlayTxt) overlayTxt.style.transform='scale(0.7)'; }, 2200);
                 }
             }, 600);
-
-            // Stardust + fireworks
             setTimeout(() => {
                 const stage = document.getElementById('cake-interactive-stage');
                 if (stage) {
-                    const r  = stage.getBoundingClientRect();
-                    const cx = r.left + r.width  / 2;
-                    const cy = r.top  + r.height / 2;
-                    spawnStardustBurst(cx - 70, cy, 30);
-                    spawnStardustBurst(cx + 70, cy, 30);
-                    spawnStardustBurst(cx, cy - 50, 35);
+                    const r = stage.getBoundingClientRect();
+                    spawnStardustBurst(r.left+r.width/2-70, r.top+r.height/2, 30);
+                    spawnStardustBurst(r.left+r.width/2+70, r.top+r.height/2, 30);
+                    spawnStardustBurst(r.left+r.width/2, r.top+r.height/2-50, 35);
                 }
                 launchCelestialFireworks(6);
             }, 650);
-
-            // Update text + button
-            if (instText) setTimeout(() => {
-                instText.textContent = 'Happy 1 Month, Akanksha! The first sweet bite is all yours. \u2764\uFE0F\uD83C\uDF70';
-                instText.style.color = '';
-            }, 1000);
-            if (btnCut) setTimeout(() => {
-                btnCut.classList.remove('animate-pulse');
-                btnCut.innerHTML = '<span>\uD83C\uDF70</span><span>Feed Another Bite!</span>';
-            }, 1100);
+            if (instText) setTimeout(() => { instText.textContent='Happy 1 Month, Akanksha! The first sweet bite is all yours. \u2764\uFE0F\uD83C\uDF70'; instText.style.color=''; }, 1000);
+            if (btnCut)   setTimeout(() => { btnCut.classList.remove('animate-pulse'); btnCut.innerHTML='<span>\uD83C\uDF70</span><span>Feed Another Bite!</span>'; }, 1100);
         }
 
         function launchCakeCelebrationBite() {
-            [659.25, 783.99, 987.77, 1174.66, 1318.51].forEach((f, i) =>
-                setTimeout(() => playCelestialNote(f, 0.17), i * 65));
+            [659.25,783.99,987.77,1174.66,1318.51].forEach((f,i) => setTimeout(() => playCelestialNote(f,0.17), i*65));
             launchCelestialFireworks(3);
             const plate = document.getElementById('served-slice-plate');
-            if (plate) {
-                plate.style.transform = 'translateY(-8px) scale(1.1)';
-                setTimeout(() => { plate.style.transform = 'translateY(0) scale(1)'; }, 300);
-            }
+            if (plate) { plate.style.transform='translateY(-8px) scale(1.1)'; setTimeout(() => { plate.style.transform='translateY(0) scale(1)'; }, 300); }
         }
 
         function resetAnniversaryCake() {
@@ -3512,27 +3437,23 @@
             const btnCandle    = document.getElementById('btn-candle-action');
             const btnCut       = document.getElementById('btn-cut-action');
 
-            if (flame) { flame.style.transform = 'scale(1)'; flame.style.opacity = '1'; }
-            if (smoke) { smoke.style.opacity = '0'; smoke.style.transform = ''; }
-            if (knife) {
-                knife.style.opacity = '0';
-                knife.style.transform = 'translate(60px,0px) rotate(-32deg)';
-                knife.style.transition = 'opacity 0.6s ease, transform 0.7s cubic-bezier(0.34,1.56,0.64,1)';
-            }
-            if (cutReveal)    { cutReveal.style.opacity = '0'; }
-            if (servedPlate)  { servedPlate.style.opacity = '0'; servedPlate.style.transform = 'translateY(16px) scale(0.9)'; servedPlate.style.pointerEvents = 'none'; }
-            if (congratsCard) { congratsCard.style.opacity = '0'; congratsCard.style.transform = 'scale(0.92) translateY(16px)'; congratsCard.style.pointerEvents = 'none'; }
-            if (instText)     { instText.textContent = 'Blow out the candle, make your secret wish \u2014 then slice our cake together to celebrate one beautiful month. \uD83D\uDD6F\uFE0F'; instText.style.color = ''; }
+            if (flame)  { flame.style.transform='scale(1)'; flame.style.opacity='1'; }
+            if (smoke)  { smoke.style.opacity='0'; smoke.style.transform=''; }
+            if (knife)  { knife.style.opacity='0'; knife.style.transform='translate(55px,-10px) rotate(-30deg)'; knife.style.transition='opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1)'; }
+            if (cutReveal)    { cutReveal.style.opacity='0'; }
+            if (servedPlate)  { servedPlate.style.opacity='0'; servedPlate.style.transform='translateY(16px) scale(0.9)'; servedPlate.style.pointerEvents='none'; }
+            if (congratsCard) { congratsCard.style.opacity='0'; congratsCard.style.transform='scale(0.92) translateY(16px)'; congratsCard.style.pointerEvents='none'; }
+            if (instText)     { instText.textContent='Blow out the candle, make your secret wish \u2014 then slice our cake together to celebrate one beautiful month. \uD83D\uDD6F\uFE0F'; instText.style.color=''; }
             if (btnCandle) {
-                btnCandle.innerHTML = '<span id="btn-candle-icon">\uD83D\uDD6F\uFE0F</span><span id="btn-candle-text">Make a Wish &amp; Blow Candle</span>';
-                btnCandle.style.background = 'linear-gradient(135deg,#fde68a,#f59e0b,#d97706)';
-                btnCandle.style.color = '#451a03';
-                btnCandle.style.boxShadow = '0 4px 20px rgba(245,158,11,0.4)';
-                btnCandle.style.pointerEvents = '';
+                btnCandle.innerHTML='<span id="btn-candle-icon">\uD83D\uDD6F\uFE0F</span><span id="btn-candle-text">Make a Wish &amp; Blow Candle</span>';
+                btnCandle.style.background='linear-gradient(135deg,#fde68a,#f59e0b,#d97706)';
+                btnCandle.style.color='#451a03';
+                btnCandle.style.boxShadow='0 4px 20px rgba(245,158,11,0.4)';
+                btnCandle.style.pointerEvents='';
             }
             if (btnCut) {
-                btnCut.innerHTML = '<span>\uD83D\uDD2A</span><span id="btn-cut-text">Cut the Cake</span>';
-                btnCut.classList.add('opacity-40', 'pointer-events-none');
+                btnCut.innerHTML='<span>\uD83D\uDD2A</span><span id="btn-cut-text">Cut the Cake</span>';
+                btnCut.classList.add('opacity-40','pointer-events-none');
                 btnCut.classList.remove('animate-pulse');
             }
             playCelestialNote(523.25, 0.12);
