@@ -3,12 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Written in the Stars — Happy 1 Month, Akanksha! ✨ | Sumit & Akanksha</title>
-    <meta property="og:title" content="Written in the Stars ✨">
-    <meta property="og:description" content="A special interactive experience, crafted with love.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#040613">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -322,52 +318,39 @@
                 display: none !important;
             }
         }
-
-            /* ── PREMIUM CAKE SECTION STYLES ── */
-            .cake-flame-svg {
-                animation: cakeFlameFlicker 1.8s ease-in-out infinite alternate;
-                transform-origin: bottom center;
+            /* ── INTERACTION & SECRET CONTENT GUARDS ── */
+            img {
+                -webkit-user-drag: none;
+                user-drag: none;
+                -webkit-touch-callout: none;
             }
-            @keyframes cakeFlameFlicker {
-                0%   { transform: scaleX(1) scaleY(1) rotate(-2deg); opacity: 1; }
-                25%  { transform: scaleX(0.92) scaleY(1.06) rotate(1deg); opacity: 0.95; }
-                50%  { transform: scaleX(1.05) scaleY(0.97) rotate(-1deg); opacity: 1; }
-                75%  { transform: scaleX(0.95) scaleY(1.04) rotate(2deg); opacity: 0.97; }
-                100% { transform: scaleX(1) scaleY(1) rotate(-1deg); opacity: 1; }
+            [data-secret],
+            #constellation-whisper-text,
+            #letter-section,
+            #letter-modal,
+            #journey-section,
+            #jar-section,
+            #scratch-section,
+            #memories-section,
+            #cake-section,
+            #reasons-flip-grid,
+            #runaway-card-arena,
+            #photo-lightbox {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
-            #cake-knife-graphic.knife-slice-anim {
-                animation: knifeSlice 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            #lantern-wish-input {
+                -webkit-user-select: text;
+                -moz-user-select: text;
+                user-select: text;
             }
-            @keyframes knifeSlice {
-                0%   { transform: rotate(0deg) translateY(0px); }
-                40%  { transform: rotate(5deg) translateY(80px); }
-                70%  { transform: rotate(0deg) translateY(120px); }
-                100% { transform: rotate(30deg) translateY(60px); opacity: 0; }
-            }
-
-
-            /* ── PREMIUM CAKE SECTION STYLES ── */
-            .cake-flame-svg {
-                animation: cakeFlameFlicker 1.6s ease-in-out infinite alternate;
-                transform-origin: 200px 50px;
-            }
-            @keyframes cakeFlameFlicker {
-                0%   { transform: scaleX(1)    scaleY(1)    rotate(-2deg); opacity: 1;    }
-                30%  { transform: scaleX(0.9)  scaleY(1.07) rotate(1.5deg); opacity: 0.95; }
-                60%  { transform: scaleX(1.06) scaleY(0.96) rotate(-1deg); opacity: 1;    }
-                100% { transform: scaleX(0.95) scaleY(1.04) rotate(2deg);  opacity: 0.97; }
-            }
-
-
-            /* ── PREMIUM CAKE SECTION ── */
-            .cake-flame-svg {
-                animation: cakeFlameFlicker 1.6s ease-in-out infinite alternate;
-            }
-            @keyframes cakeFlameFlicker {
-                0%   { transform: scaleX(1)    scaleY(1)    rotate(-2deg); opacity: 1;    }
-                30%  { transform: scaleX(0.88) scaleY(1.08) rotate(1.5deg); opacity: 0.94; }
-                60%  { transform: scaleX(1.07) scaleY(0.95) rotate(-1deg); opacity: 1;    }
-                100% { transform: scaleX(0.94) scaleY(1.05) rotate(2deg);  opacity: 0.97; }
+            body.screenshot-shield main,
+            body.screenshot-shield #letter-modal,
+            body.screenshot-shield #photo-lightbox {
+                filter: blur(14px);
+                transition: filter 0.15s ease;
             }
 
     </style>
@@ -379,6 +362,15 @@
          GLOBAL STARDUST TRAIL & CELEBRATION FIREWORKS CANVAS
          ========================================================================= -->
     <canvas id="stardust-canvas" class="fixed inset-0 pointer-events-none z-[120]"></canvas>
+
+    <!-- Protection Warning Toast (Screenshot Shortcut / Capture Warning) -->
+    <div id="celestial-protection-toast" role="alert" aria-live="polite"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-[260] pointer-events-none opacity-0 -translate-y-4 transition-all duration-300 max-w-md w-[90%] sm:w-auto px-5 py-3 rounded-2xl astral-glass border border-nebula-400/60 bg-[#0b1026]/95 shadow-[0_0_35px_rgba(251,113,133,0.4)] text-center flex items-center justify-center gap-2.5">
+        <span class="text-lg">🛡️</span>
+        <span id="celestial-protection-toast-text" class="text-xs sm:text-sm font-medium text-stardust-100">
+            This surprise is meant to be experienced live — please don't screenshot! ✨
+        </span>
+    </div>
 
     <!-- =========================================================================
          1. ASTRAL MIDNIGHT COUNTDOWN LOCK SCREEN OVERLAY (#countdown-lock-overlay)
@@ -801,7 +793,8 @@
                                         <stop offset="50%" stop-color="#fde68a" />
                                         <stop offset="100%" stop-color="#fb7185" />
                                     </linearGradient>
-                                    <linearGradient id="arrowShaftGrad" x1="0" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+                                    <linearGradient id="arrowShaftGrad" x1="0" y1="0" x2="0" y2="100"
+                                        gradientUnits="userSpaceOnUse">
                                         <stop offset="0%" stop-color="#ffffff" />
                                         <stop offset="40%" stop-color="#fde68a" />
                                         <stop offset="100%" stop-color="#f59e0b" />
@@ -832,8 +825,10 @@
                                 <g id="flying-arrow"
                                     style="transform: translateY(0px); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);">
                                     <!-- Glowing Starlight Arrow Shaft -->
-                                    <rect x="128" y="2" width="4" height="98" rx="2" fill="#fde68a" filter="url(#celestialGlow)" />
-                                    <line x1="130" y1="2" x2="130" y2="100" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+                                    <rect x="128" y="2" width="4" height="98" rx="2" fill="#fde68a"
+                                        filter="url(#celestialGlow)" />
+                                    <line x1="130" y1="2" x2="130" y2="100" stroke="#ffffff" stroke-width="2"
+                                        stroke-linecap="round" />
                                     <!-- Rose-Gold Starlight Arrowhead -->
                                     <polygon points="130,-12 141,10 130,4 119,10" fill="#fb7185" stroke="#fde68a"
                                         stroke-width="1.5" />
@@ -1109,328 +1104,261 @@
         </section>
 
         <!-- =====================================================================
+             SECTION 7: 6 STARLIGHT FLIP CARDS, LOVE METER, SKY LANTERNS & FINALE (#finale-section)
              SECTION 6.5: VIRTUAL 1-MONTH ANNIVERSARY CAKE CUTTING (#cake-section)
              ===================================================================== -->
-        <section id="cake-section" class="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden">
-
-            <!-- Ambient rose bokeh -->
-            <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-                <div class="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl animate-pulse" style="background:rgba(244,63,94,0.06);"></div>
-                <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-3xl animate-pulse" style="background:rgba(245,158,11,0.05);animation-delay:1.5s"></div>
-            </div>
-
-            <div class="max-w-3xl mx-auto text-center relative z-10">
-
-                <!-- Badge -->
-                <span class="px-3.5 py-1 rounded-full border text-xs uppercase tracking-widest inline-flex items-center gap-1.5 shadow-lg"
-                      style="background:linear-gradient(135deg,rgba(244,63,94,0.15),rgba(245,158,11,0.12));border-color:rgba(251,113,133,0.3);color:#fda4af;">
-                    <span>🎂</span><span>1-Month Milestone Celebration</span>
+        <section id="cake-section" class="py-16 sm:py-24 px-4 sm:px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <span
+                    class="px-3.5 py-1 rounded-full bg-gradient-to-r from-stardust-300/20 via-pink-500/20 to-aurora-500/20 border border-stardust-200/35 text-stardust-200 text-xs uppercase tracking-widest inline-flex items-center gap-1.5 shadow-lg shadow-pink-500/10">
+                    <span>🎂</span>
+                    <span>1-Month Milestone Celebration</span>
                 </span>
-
                 <h2 class="font-serif text-3xl sm:text-5xl font-bold celestial-shimmer mt-3 mb-3">
                     Make a Wish &amp; Cut Our Cake
                 </h2>
-                <p id="cake-instruction-text" class="text-slate-300 text-sm sm:text-base max-w-lg mx-auto leading-relaxed" style="transition:color 0.5s;">
-                    Blow out the candle, make your secret wish — then slice our cake together to celebrate one beautiful month. 🕯️
+                <p id="cake-instruction-text"
+                    class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed transition-all duration-300">
+                    No anniversary is complete without cutting a cake! Make your wish, tap the glowing candle to blow it
+                    out, and slice our 1-month celebration cake together. 🕯️✨
                 </p>
 
-                <!-- STAGE CARD -->
-                <div class="relative mt-10 max-w-lg mx-auto">
-                    <div class="absolute inset-0 rounded-3xl blur-xl scale-105 pointer-events-none" style="background:linear-gradient(180deg,rgba(244,63,94,0.18),transparent,rgba(245,158,11,0.08));"></div>
-                    <div class="relative rounded-3xl px-4 pt-8 pb-6 border border-white/10 astral-glass" style="box-shadow:0 0 60px rgba(244,63,94,0.12),0 0 120px rgba(0,0,0,0.5);">
+                <!-- Interactive Cake Stage Area -->
+                <div
+                    class="relative mt-8 sm:mt-10 max-w-xl mx-auto astral-glass rounded-3xl p-6 sm:p-10 border border-stardust-200/30 shadow-[0_0_80px_rgba(253,230,138,0.18)]">
 
-                        <!-- CAKE SVG STAGE — viewBox gives 60px headroom above cake for flame+candle -->
-                        <div id="cake-interactive-stage" class="relative select-none" style="height:360px;">
-                            <svg id="cake-svg" viewBox="0 0 400 360" width="100%" height="100%"
-                                 style="overflow:visible;display:block;">
+                    <!-- Cake Illustration SVG + Interactive Elements -->
+                    <div id="cake-interactive-stage"
+                        class="relative flex flex-col items-center justify-center select-none py-2">
+
+                        <!-- SVG Cake Arena -->
+                        <div
+                            class="relative w-full max-w-[340px] sm:max-w-[420px] aspect-[4/3] flex items-center justify-center">
+                            <svg id="cake-svg" viewBox="0 0 380 300"
+                                class="w-full h-full overflow-visible select-none drop-shadow-2xl">
                                 <defs>
-                                    <linearGradient id="cBotSide" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#7f1d3c"/>
-                                        <stop offset="30%"  stop-color="#be123c"/>
-                                        <stop offset="65%"  stop-color="#e11d48"/>
-                                        <stop offset="100%" stop-color="#881337"/>
+                                    <!-- Cake Plate & Stand Gradients -->
+                                    <linearGradient id="pedestalStandGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#fef08a" />
+                                        <stop offset="50%" stop-color="#f59e0b" />
+                                        <stop offset="100%" stop-color="#78350f" />
                                     </linearGradient>
-                                    <linearGradient id="cBotTop" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#9f1239"/>
-                                        <stop offset="50%"  stop-color="#be123c"/>
-                                        <stop offset="100%" stop-color="#9f1239"/>
+                                    <linearGradient id="marblePlateGrad" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#1e1b4b" />
+                                        <stop offset="50%" stop-color="#312e81" />
+                                        <stop offset="100%" stop-color="#1e1b4b" />
                                     </linearGradient>
-                                    <linearGradient id="cTopSide" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#ffe4e6"/>
-                                        <stop offset="50%"  stop-color="#fff1f2"/>
-                                        <stop offset="100%" stop-color="#fecdd3"/>
+
+                                    <!-- Bottom Tier Velvet Frosting -->
+                                    <linearGradient id="bottomTierGrad" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#831843" />
+                                        <stop offset="40%" stop-color="#be185d" />
+                                        <stop offset="70%" stop-color="#db2777" />
+                                        <stop offset="100%" stop-color="#9d174d" />
                                     </linearGradient>
-                                    <linearGradient id="cTopTop" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#fce7f3"/>
-                                        <stop offset="50%"  stop-color="#fff1f2"/>
-                                        <stop offset="100%" stop-color="#fce7f3"/>
+
+                                    <!-- Top Tier Vanilla Cream -->
+                                    <linearGradient id="topTierGrad" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#fdf2f8" />
+                                        <stop offset="50%" stop-color="#fce7f3" />
+                                        <stop offset="100%" stop-color="#fbcfe8" />
                                     </linearGradient>
-                                    <linearGradient id="cGold" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#92400e"/>
-                                        <stop offset="30%"  stop-color="#d97706"/>
-                                        <stop offset="50%"  stop-color="#fde68a"/>
-                                        <stop offset="70%"  stop-color="#d97706"/>
-                                        <stop offset="100%" stop-color="#92400e"/>
+
+                                    <!-- Gold Ribbon Plaque -->
+                                    <linearGradient id="goldBannerGrad" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#d97706" />
+                                        <stop offset="50%" stop-color="#fde68a" />
+                                        <stop offset="100%" stop-color="#b45309" />
                                     </linearGradient>
-                                    <linearGradient id="cPlate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%"   stop-color="#312e81"/>
-                                        <stop offset="50%"  stop-color="#1e1b4b"/>
-                                        <stop offset="100%" stop-color="#0f0d2a"/>
+
+                                    <!-- Inner Cake Sponge Layers (When Sliced) -->
+                                    <linearGradient id="spongeSoberGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#fb7185" />
+                                        <stop offset="25%" stop-color="#f43f5e" />
+                                        <stop offset="50%" stop-color="#ffe4e6" />
+                                        <stop offset="75%" stop-color="#e11d48" />
+                                        <stop offset="100%" stop-color="#be123c" />
                                     </linearGradient>
-                                    <linearGradient id="cPedestal" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%"   stop-color="#f59e0b"/>
-                                        <stop offset="100%" stop-color="#78350f"/>
-                                    </linearGradient>
-                                    <linearGradient id="cKnifeBlade" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#9ca3af"/>
-                                        <stop offset="35%"  stop-color="#f9fafb"/>
-                                        <stop offset="65%"  stop-color="#e5e7eb"/>
-                                        <stop offset="100%" stop-color="#6b7280"/>
-                                    </linearGradient>
-                                    <linearGradient id="cKnifeHandle" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#f0fdf4"/>
-                                        <stop offset="40%"  stop-color="#fef9ee"/>
-                                        <stop offset="100%" stop-color="#e0e7ff"/>
-                                    </linearGradient>
-                                    <linearGradient id="cCandleBody" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%"   stop-color="#d97706"/>
-                                        <stop offset="40%"  stop-color="#fde68a"/>
-                                        <stop offset="100%" stop-color="#b45309"/>
-                                    </linearGradient>
-                                    <!-- Sponge cross-section with sharp cake layers -->
-                                    <linearGradient id="cSponge" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%"   stop-color="#fce7f3"/>
-                                        <stop offset="12%"  stop-color="#fce7f3"/>
-                                        <stop offset="12%"  stop-color="#e11d48"/>
-                                        <stop offset="30%"  stop-color="#e11d48"/>
-                                        <stop offset="30%"  stop-color="#fce7f3"/>
-                                        <stop offset="45%"  stop-color="#fce7f3"/>
-                                        <stop offset="45%"  stop-color="#9f1239"/>
-                                        <stop offset="65%"  stop-color="#be123c"/>
-                                        <stop offset="65%"  stop-color="#fce7f3"/>
-                                        <stop offset="78%"  stop-color="#fce7f3"/>
-                                        <stop offset="78%"  stop-color="#be123c"/>
-                                        <stop offset="100%" stop-color="#9f1239"/>
-                                    </linearGradient>
-                                    <filter id="cFlameGlow" x="-100%" y="-100%" width="300%" height="300%">
-                                        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
-                                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                    </filter>
-                                    <filter id="cShadow" x="-10%" y="-10%" width="120%" height="140%">
-                                        <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="rgba(0,0,0,0.5)"/>
+
+                                    <!-- Candle Flame Glow Filter -->
+                                    <filter id="cakeCandleGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                                        <feMerge>
+                                            <feMergeNode in="blur" />
+                                            <feMergeNode in="SourceGraphic" />
+                                        </feMerge>
                                     </filter>
                                 </defs>
 
-                                <!-- ══ PLATE & PEDESTAL ══ (bottom: y=330-350) -->
-                                <ellipse cx="200" cy="346" rx="130" ry="10" fill="rgba(0,0,0,0.45)" filter="url(#cShadow)"/>
-                                <rect x="188" y="322" width="24" height="20" rx="3" fill="url(#cPedestal)"/>
-                                <ellipse cx="200" cy="322" rx="140" ry="14" fill="url(#cPlate)" stroke="rgba(253,230,138,0.5)" stroke-width="2.5"/>
-                                <ellipse cx="200" cy="321" rx="130" ry="11" fill="none" stroke="rgba(253,230,138,0.2)" stroke-width="1" stroke-dasharray="5 4"/>
+                                <!-- Pedestal Cake Stand Base -->
+                                <ellipse cx="190" cy="275" rx="145" ry="16" fill="rgba(0,0,0,0.45)" />
+                                <path d="M 170 250 L 160 270 L 220 270 L 210 250 Z" fill="url(#pedestalStandGrad)" />
+                                <ellipse cx="190" cy="250" rx="135" ry="15" fill="url(#marblePlateGrad)"
+                                    stroke="url(#pedestalStandGrad)" stroke-width="3" />
+                                <ellipse cx="190" cy="248" rx="128" ry="12" fill="none" stroke="rgba(253,230,138,0.3)"
+                                    stroke-width="1.5" stroke-dasharray="4 3" />
 
-                                <!-- ══ BOTTOM TIER ══ (y=225 to y=308) -->
-                                <!-- Side body with rounded bottom -->
-                                <path d="M 72 235 L 72 308 C 72 322, 328 322, 328 308 L 328 235 Z" fill="url(#cBotSide)"/>
-                                <!-- Depth shadow bands -->
-                                <path d="M 72 235 L 72 308 C 72 322, 108 322, 108 308 L 108 235 Z" fill="rgba(0,0,0,0.2)"/>
-                                <path d="M 292 235 L 292 308 C 292 322, 328 322, 328 308 L 328 235 Z" fill="rgba(0,0,0,0.14)"/>
-                                <!-- Velvet horizontal texture lines -->
-                                <line x1="72" y1="250" x2="328" y2="250" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-                                <line x1="72" y1="265" x2="328" y2="265" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-                                <line x1="72" y1="280" x2="328" y2="280" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-                                <line x1="72" y1="295" x2="328" y2="295" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-                                <!-- Cream drip wave across top of bottom tier -->
-                                <path d="M 72 243 C 90 243,94 257,112 257 C 130 257,134 243,152 243 C 170 243,174 258,192 258 C 210 258,214 243,232 243 C 250 243,254 257,272 257 C 290 257,294 243,310 243 C 318 243,323 243,328 243"
-                                      fill="none" stroke="#fdf2f8" stroke-width="6" stroke-linecap="round" opacity="0.92"/>
-                                <!-- Gold plaque banner -->
-                                <rect x="112" y="275" width="176" height="22" rx="11" fill="url(#cGold)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                                <text x="200" y="290" text-anchor="middle" font-family="'Cormorant Garamond',serif"
-                                      font-weight="700" font-size="11" fill="#451a03" letter-spacing="1.5">Sumit ❤ Akanksha · 1 Month</text>
-                                <!-- Gold pearls bottom row -->
-                                <g fill="#fde68a">
-                                    <circle cx="90"  cy="314" r="4"/>
-                                    <circle cx="118" cy="317" r="4"/>
-                                    <circle cx="150" cy="319" r="4"/>
-                                    <circle cx="183" cy="320" r="4"/>
-                                    <circle cx="200" cy="321" r="4"/>
-                                    <circle cx="217" cy="320" r="4"/>
-                                    <circle cx="250" cy="319" r="4"/>
-                                    <circle cx="282" cy="317" r="4"/>
-                                    <circle cx="310" cy="314" r="4"/>
-                                </g>
-                                <!-- Bottom tier 3D top cap (ellipse) -->
-                                <ellipse cx="200" cy="235" rx="128" ry="22" fill="url(#cBotTop)" stroke="rgba(251,113,133,0.6)" stroke-width="2"/>
-                                <ellipse cx="200" cy="233" rx="90" ry="12" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-
-                                <!-- ══ TOP TIER ══ (y=155 to y=228) -->
-                                <path d="M 128 165 L 128 228 C 128 240, 272 240, 272 228 L 272 165 Z" fill="url(#cTopSide)"/>
-                                <!-- Depth shadows -->
-                                <path d="M 128 165 L 128 228 C 128 240, 155 240, 155 228 L 155 165 Z" fill="rgba(0,0,0,0.1)"/>
-                                <path d="M 245 165 L 245 228 C 245 240, 272 240, 272 228 L 272 165 Z" fill="rgba(0,0,0,0.08)"/>
-                                <!-- Rose gold detail band -->
-                                <rect x="128" y="212" width="144" height="18" fill="rgba(249,168,212,0.75)"/>
-                                <!-- Pearl beads on band -->
-                                <g fill="white" opacity="0.9">
-                                    <circle cx="145" cy="221" r="3.5"/>
-                                    <circle cx="167" cy="221" r="3.5"/>
-                                    <circle cx="189" cy="221" r="3.5"/>
-                                    <circle cx="211" cy="221" r="3.5"/>
-                                    <circle cx="233" cy="221" r="3.5"/>
-                                    <circle cx="255" cy="221" r="3.5"/>
-                                </g>
-                                <!-- Floral motifs -->
-                                <text x="168" y="205" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
-                                <text x="200" y="208" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
-                                <text x="232" y="205" font-size="16" text-anchor="middle" opacity="0.72">🌸</text>
-                                <!-- Top tier frosting drip -->
-                                <path d="M 128 173 C 140 173,143 183,154 183 C 165 183,168 173,179 173 C 190 173,193 183,204 183 C 215 183,218 173,229 173 C 240 173,243 183,254 183 C 265 183,268 173,272 173"
-                                      fill="none" stroke="rgba(253,242,248,0.9)" stroke-width="5" stroke-linecap="round"/>
-                                <!-- Top tier 3D cap -->
-                                <ellipse cx="200" cy="165" rx="72" ry="16" fill="url(#cTopTop)" stroke="rgba(251,207,232,0.7)" stroke-width="2"/>
-                                <ellipse cx="200" cy="164" rx="52" ry="10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-
-                                <!-- ══ SLICE CUT REVEAL ══ (right side, hidden until sliced) -->
-                                <g id="cake-cut-reveal" opacity="0" style="transition:opacity 0.7s ease;">
-                                    <path d="M 268 165 L 310 182 L 316 315 L 268 308 Z" fill="url(#cSponge)" stroke="rgba(253,230,138,0.6)" stroke-width="1.5"/>
-                                    <line x1="268" y1="181" x2="310" y2="196" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="212" x2="312" y2="226" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="248" x2="314" y2="262" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                    <line x1="268" y1="280" x2="315" y2="294" stroke="#fce7f3" stroke-width="3" opacity="0.8"/>
-                                </g>
-
-                                <!-- ══ CANDLE GROUP ══ (y=100-162 candle body, flame y=60-100) -->
-                                <!-- candle sits ON TOP of the cake: top tier cap at y=149-181, so candle starts at y=100 -->
-                                <g id="cake-candle-group" style="cursor:pointer;" onclick="handleCandleDirectTap()" title="Tap to blow out candle">
-
-                                    <!-- Candle body: x=194-206, y=108-162 -->
-                                    <rect x="194" y="110" width="12" height="52" rx="2" fill="url(#cCandleBody)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-                                    <!-- Spiral red stripes -->
-                                    <line x1="194" y1="119" x2="206" y2="115" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="131" x2="206" y2="127" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="143" x2="206" y2="139" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <line x1="194" y1="155" x2="206" y2="151" stroke="#e11d48" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-                                    <!-- Candle highlight -->
-                                    <rect x="196" y="112" width="3" height="48" rx="1" fill="rgba(255,255,255,0.3)"/>
-                                    <!-- Wax drip -->
-                                    <path d="M 198 158 C 197 162,196 166,197 168 C 198 170,200 170,201 168 C 202 166,201 162,200 158 Z" fill="rgba(253,230,138,0.7)"/>
-                                    <!-- Wick -->
-                                    <line x1="200" y1="110" x2="200" y2="103" stroke="#374151" stroke-width="1.5" stroke-linecap="round"/>
-
-                                    <!-- Flame wrapper (y=65-103) — well above the cake -->
-                                    <g id="candle-flame-wrapper" style="transition:transform 0.4s,opacity 0.4s;transform-origin:200px 110px;">
-                                        <!-- Outer ambient glow halo -->
-                                        <circle cx="200" cy="85" r="22" fill="rgba(253,230,138,0.18)" filter="url(#cFlameGlow)"/>
-                                        <!-- Flame outer amber -->
-                                        <path class="cake-flame-svg"
-                                              d="M 200 65 C 207 76,212 87,210 95 C 208 101,192 101,190 95 C 188 87,193 76,200 65 Z"
-                                              fill="#f59e0b" filter="url(#cFlameGlow)" style="transform-origin:200px 100px;"/>
-                                        <!-- Flame inner cream -->
-                                        <path d="M 200 72 C 205 81,208 90,206 96 C 204 100,196 100,194 96 C 192 90,195 81,200 72 Z" fill="#fef3c7"/>
-                                        <!-- Flame bright core -->
-                                        <ellipse cx="200" cy="80" rx="4" ry="6" fill="white" opacity="0.9"/>
+                                <!-- Main Cake Body Group -->
+                                <g id="full-cake-group">
+                                    <!-- BOTTOM TIER -->
+                                    <g id="bottom-tier">
+                                        <!-- Bottom Tier Side -->
+                                        <path d="M 80 180 L 80 230 C 80 248, 300 248, 300 230 L 300 180 Z"
+                                            fill="url(#bottomTierGrad)" />
+                                        <!-- Bottom Tier Top Ellipse -->
+                                        <ellipse cx="190" cy="180" rx="110" ry="24" fill="#be185d" stroke="#fbcfe8"
+                                            stroke-width="2" />
+                                        <!-- Cream Drips on Bottom Tier -->
+                                        <path
+                                            d="M 80 185 C 95 198, 105 185, 120 200 C 135 210, 145 190, 160 202 C 175 212, 190 192, 205 204 C 220 214, 235 190, 250 202 C 265 210, 280 185, 300 185"
+                                            fill="none" stroke="#fdf2f8" stroke-width="5" stroke-linecap="round" />
+                                        <!-- Decorative Frosting Pearls along base -->
+                                        <g fill="#fde68a">
+                                            <circle cx="95" cy="235" r="4" />
+                                            <circle cx="120" cy="241" r="4" />
+                                            <circle cx="150" cy="244" r="4" />
+                                            <circle cx="190" cy="246" r="4" />
+                                            <circle cx="230" cy="244" r="4" />
+                                            <circle cx="260" cy="241" r="4" />
+                                            <circle cx="285" cy="235" r="4" />
+                                        </g>
+                                        <!-- Golden Love Banner Plaque -->
+                                        <rect x="100" y="202" width="180" height="24" rx="12"
+                                            fill="url(#goldBannerGrad)" stroke="#ffffff" stroke-width="1" />
+                                        <text x="190" y="218" text-anchor="middle"
+                                            font-family="'Cormorant Garamond', serif" font-weight="700" font-size="12"
+                                            fill="#78350f" letter-spacing="1">
+                                            Sumit ❤️ Akanksha • 1 Month
+                                        </text>
                                     </g>
 
-                                    <!-- Smoke curl (hidden until blown) -->
-                                    <g id="candle-smoke" opacity="0" class="pointer-events-none"
-                                       style="transition:opacity 0.7s,transform 0.9s;transform-origin:200px 103px;">
-                                        <path d="M 200 100 Q 194 88,202 76 Q 209 64,198 52 Q 191 42,200 32"
-                                              fill="none" stroke="rgba(203,213,225,0.7)" stroke-width="2.5"
-                                              stroke-linecap="round" stroke-dasharray="5 4"/>
+                                    <!-- TOP TIER -->
+                                    <g id="top-tier">
+                                        <!-- Top Tier Side -->
+                                        <path d="M 120 125 L 120 170 C 120 184, 260 184, 260 170 L 260 125 Z"
+                                            fill="url(#topTierGrad)" />
+                                        <!-- Top Tier Top Ellipse -->
+                                        <ellipse cx="190" cy="125" rx="70" ry="18" fill="#fff1f2" stroke="#fb7185"
+                                            stroke-width="2" />
+                                        <!-- Strawberry Frosting Hearts on Top Tier -->
+                                        <text x="145" y="156" font-size="14" fill="#e11d48">❤️</text>
+                                        <text x="184" y="160" font-size="14" fill="#e11d48">❤️</text>
+                                        <text x="222" y="156" font-size="14" fill="#e11d48">❤️</text>
                                     </g>
                                 </g>
 
-                                <!-- ══ KNIFE ══ (initially offset right + rotated, slides in after candle blown) -->
-                                <g id="cake-knife-graphic" opacity="0"
-                                   style="transform:translate(55px,-10px) rotate(-30deg);transform-origin:300px 130px;
-                                          transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
-                                          filter:drop-shadow(0 4px 14px rgba(0,0,0,0.6));">
-                                    <!-- Blade (y=120-240) -->
-                                    <path d="M 292 120 L 302 120 L 306 240 L 288 240 Z" fill="url(#cKnifeBlade)"/>
-                                    <!-- Blade edge highlight -->
-                                    <line x1="294" y1="123" x2="290" y2="237" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" stroke-linecap="round"/>
-                                    <!-- Blade shine -->
-                                    <path d="M 296 128 L 301 128 L 303 205 L 294 205 Z" fill="rgba(255,255,255,0.1)"/>
-                                    <!-- Bolster guard -->
-                                    <rect x="286" y="113" width="22" height="9" rx="3" fill="#92400e" stroke="rgba(253,230,138,0.5)" stroke-width="1"/>
-                                    <!-- Handle (pearl / white-gold) -->
-                                    <rect x="288" y="55" width="18" height="60" rx="5" fill="url(#cKnifeHandle)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                                    <!-- Handle texture lines -->
-                                    <line x1="290" y1="69"  x2="304" y2="69"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                    <line x1="290" y1="82"  x2="304" y2="82"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                    <line x1="290" y1="95"  x2="304" y2="95"  stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                    <!-- Gold rivets -->
-                                    <circle cx="297" cy="65" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
-                                    <circle cx="297" cy="98" r="3.5" fill="#fde68a" stroke="#b45309" stroke-width="0.5"/>
-                                    <!-- Handle top cap -->
-                                    <ellipse cx="297" cy="57" rx="9" ry="4" fill="#f59e0b" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                <!-- SLICED CUT-OUT MARKER (Visible after cut) -->
+                                <path id="cake-cut-line" d="M 190 125 L 240 145 L 245 235 L 190 225 Z"
+                                    fill="url(#spongeSoberGrad)" opacity="0" stroke="#fde68a" stroke-width="1.5"
+                                    class="transition-opacity duration-500" />
+
+                                <!-- CANDLE & FLAME (On top of cake at cx=190, cy=125) -->
+                                <g id="cake-candle-group" class="cursor-pointer" onclick="handleCandleDirectTap()"
+                                    title="Tap to blow out candle">
+                                    <!-- Candle Stick -->
+                                    <rect x="187" y="82" width="6" height="38" rx="2" fill="url(#goldBannerGrad)"
+                                        stroke="#ffffff" stroke-width="0.8" />
+                                    <!-- Spiral Stripes on Candle -->
+                                    <line x1="187" y1="90" x2="193" y2="86" stroke="#e11d48" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <line x1="187" y1="102" x2="193" y2="98" stroke="#e11d48" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <line x1="187" y1="114" x2="193" y2="110" stroke="#e11d48" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <!-- Candle Wick -->
+                                    <line x1="190" y1="82" x2="190" y2="76" stroke="#475569" stroke-width="1.5"
+                                        stroke-linecap="round" />
+
+                                    <!-- Flame Aura & Core (#candle-flame-wrapper) -->
+                                    <g id="candle-flame-wrapper" class="origin-bottom transition-all duration-300">
+                                        <!-- Outer Glow -->
+                                        <circle cx="190" cy="65" r="16" fill="rgba(253, 230, 138, 0.35)"
+                                            filter="url(#cakeCandleGlow)" class="animate-pulse" />
+                                        <!-- Flame Outer Teardrop -->
+                                        <path d="M 190 52 C 196 62, 196 72, 190 75 C 184 72, 184 62, 190 52 Z"
+                                            fill="#f59e0b" filter="url(#cakeCandleGlow)" />
+                                        <!-- Flame Inner Bright Core -->
+                                        <path d="M 190 56 C 194 64, 194 72, 190 74 C 186 72, 186 64, 190 56 Z"
+                                            fill="#ffffff" />
+                                    </g>
+
+                                    <!-- Smoke Puff (#candle-smoke) initially invisible -->
+                                    <g id="candle-smoke" opacity="0"
+                                        class="pointer-events-none transition-all duration-700">
+                                        <path d="M 190 74 Q 186 64 192 54 T 188 38 T 194 22" fill="none"
+                                            stroke="rgba(226, 232, 240, 0.75)" stroke-width="2.5" stroke-linecap="round"
+                                            stroke-dasharray="4 3" />
+                                    </g>
                                 </g>
 
+                                <!-- GOLD CAKE KNIFE (#cake-knife-graphic) -->
+                                <g id="cake-knife-graphic"
+                                    class="pointer-events-none transition-all duration-700 ease-in-out"
+                                    style="transform: translate(265px, 20px) rotate(-35deg); opacity: 0;">
+                                    <!-- Knife Blade -->
+                                    <path d="M 0 0 L 14 -4 L 16 115 L 0 102 Z" fill="url(#goldBannerGrad)"
+                                        stroke="#ffffff" stroke-width="1.2" filter="url(#cakeCandleGlow)" />
+                                    <!-- Knife Spine Highlight -->
+                                    <line x1="2" y1="2" x2="2" y2="100" stroke="#ffffff" stroke-width="1.2"
+                                        opacity="0.9" />
+                                    <!-- Knife Bolster -->
+                                    <rect x="-3" y="-8" width="20" height="6" rx="2" fill="#78350f" />
+                                    <!-- Knife Rose Handle -->
+                                    <rect x="0" y="-50" width="14" height="44" rx="4" fill="#9d174d" stroke="#fbcfe8"
+                                        stroke-width="1" />
+                                    <circle cx="7" cy="-28" r="2.5" fill="#fde68a" />
+                                </g>
                             </svg>
 
-                            <!-- Served slice (bottom-right corner, slides in after cut) -->
-                            <div id="served-slice-plate" class="absolute right-1 bottom-2 w-28 pointer-events-none rounded-2xl p-3 text-center border border-rose-300/25 shadow-xl"
-                                 style="opacity:0;transform:translateY(16px) scale(0.9);
-                                        transition:opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
-                                        background:linear-gradient(135deg,rgba(15,10,30,0.97),rgba(30,15,40,0.97));">
-                                <div class="text-xs font-serif uppercase tracking-widest mb-1" style="color:#fda4af;">Your Slice</div>
-                                <div class="text-3xl" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));">🍰</div>
-                                <div class="text-[10px] mt-1 leading-tight" style="color:#fbcfe8;">First bite<br>for Akanksha ❤</div>
+                            <!-- Dessert Serving Plate with Cut Slice (Appears when cake is sliced) -->
+                            <div id="served-slice-plate"
+                                class="absolute -right-2 sm:-right-6 bottom-4 sm:bottom-8 w-32 sm:w-40 bg-cosmos-900/95 astral-glass rounded-2xl p-3 border border-stardust-200/50 shadow-2xl opacity-0 translate-y-6 pointer-events-none transition-all duration-700 flex flex-col items-center">
+                                <span
+                                    class="text-[11px] font-serif text-stardust-200 uppercase tracking-widest font-semibold">Your
+                                    Slice 🍰</span>
+                                <div class="text-4xl my-1 animate-bounce">🍰</div>
+                                <span class="text-[10px] text-pink-200 font-medium text-center">First bite for Akanksha
+                                    ❤️</span>
                             </div>
-
-                        </div><!-- /cake-interactive-stage -->
-
-                        <!-- ACTION BUTTONS -->
-                        <div class="flex flex-wrap items-center justify-center gap-3 mt-6 pt-5 border-t border-white/10">
-                            <button id="btn-candle-action" type="button" onclick="handleCandleBtnClick()"
-                                class="px-5 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform"
-                                style="background:linear-gradient(135deg,#fde68a,#f59e0b,#d97706);color:#451a03;box-shadow:0 4px 20px rgba(245,158,11,0.4);">
-                                <span id="btn-candle-icon">🕯️</span>
-                                <span id="btn-candle-text">Make a Wish &amp; Blow Candle</span>
-                            </button>
-                            <button id="btn-cut-action" type="button" onclick="sliceAnniversaryCake()"
-                                class="px-5 py-2.5 rounded-full font-semibold text-sm text-white flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform opacity-40 pointer-events-none"
-                                style="background:linear-gradient(135deg,#f43f5e,#e11d48,#be123c);box-shadow:0 4px 20px rgba(244,63,94,0.3);">
-                                <span>🔪</span><span id="btn-cut-text">Cut the Cake</span>
-                            </button>
-                            <button id="btn-reset-cake" type="button" onclick="resetAnniversaryCake()" title="Reset ceremony"
-                                class="px-3.5 py-2.5 rounded-full border border-white/15 text-slate-300 text-xs font-medium hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5"
-                                style="background:rgba(255,255,255,0.05);">
-                                <span>↺</span><span class="hidden sm:inline">Reset</span>
-                            </button>
                         </div>
 
-                    </div><!-- /card -->
-                </div><!-- /relative mt-10 -->
+                        <!-- Sweet Pop-up Card when Cut -->
+                        <div id="cake-congrats-card"
+                            class="mt-4 p-5 rounded-2xl bg-gradient-to-r from-rose-950/90 via-cosmos-900/95 to-rose-950/90 border border-stardust-200/40 max-w-md w-full shadow-2xl opacity-0 scale-95 pointer-events-none transition-all duration-500 text-center">
+                            <p class="font-script text-2xl sm:text-3xl text-stardust-200">Happy 1 Month, Akanksha! 🎂❤️
+                            </p>
+                            <p class="text-xs sm:text-sm text-slate-200 mt-2 leading-relaxed">
+                                "May our journey together always be filled with sweet laughter, warm hugs, and countless
+                                beautiful memories."
+                            </p>
+                            <p class="text-xs font-semibold text-rose-300 mt-3">— Forever yours, Sumit ❤️</p>
+                        </div>
+                    </div>
 
-                <!-- Congrats card (revealed after cake cut) -->
-                <div id="cake-congrats-card" class="mt-8 mx-auto max-w-md rounded-2xl px-6 py-6 text-center pointer-events-none"
-                     style="opacity:0;transform:scale(0.92) translateY(16px);
-                            transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
-                            background:linear-gradient(135deg,rgba(159,18,57,0.25),rgba(10,8,25,0.92),rgba(120,53,15,0.2));
-                            border:1px solid rgba(253,230,138,0.22);
-                            box-shadow:0 0 40px rgba(244,63,94,0.12),0 20px 60px rgba(0,0,0,0.5);">
-                    <div class="mx-auto mb-4 w-16 h-px" style="background:linear-gradient(90deg,transparent,rgba(253,230,138,0.7),transparent);"></div>
-                    <p class="font-script text-3xl sm:text-4xl" style="color:#fde68a;text-shadow:0 0 20px rgba(253,230,138,0.4);">Happy 1 Month, Akanksha!</p>
-                    <div class="my-3 text-2xl">🎂 ❤️ 🌟</div>
-                    <p class="text-sm sm:text-base text-slate-200 leading-relaxed italic">
-                        "May every coming month be sweeter than this one — full of laughter, warmth, and you."
-                    </p>
-                    <p class="text-xs font-semibold mt-4" style="color:#fda4af;">— Forever yours, Sumit ❤</p>
-                    <div class="mx-auto mt-4 w-16 h-px" style="background:linear-gradient(90deg,transparent,rgba(253,230,138,0.7),transparent);"></div>
-                </div>
+                    <!-- Interactive Action Buttons -->
+                    <div
+                        class="flex flex-wrap items-center justify-center gap-3 mt-6 pt-6 border-t border-stardust-200/20">
+                        <button id="btn-candle-action" type="button" onclick="handleCandleBtnClick()"
+                            class="px-5 py-2.5 rounded-full bg-gradient-to-r from-stardust-400 via-amber-400 to-stardust-500 text-cosmos-950 font-semibold text-xs sm:text-sm shadow-lg shadow-stardust-400/25 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                            <span id="btn-candle-icon">🕯️</span>
+                            <span id="btn-candle-text">Make a Wish &amp; Blow Candle</span>
+                        </button>
 
-            </div><!-- /max-w-3xl -->
+                        <button id="btn-cut-action" type="button" onclick="sliceAnniversaryCake()"
+                            class="px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-aurora-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-rose-500/25 hover:scale-105 active:scale-95 transition-all opacity-50 pointer-events-none flex items-center gap-2">
+                            <span>🔪</span>
+                            <span id="btn-cut-text">Cut the Cake</span>
+                        </button>
 
-            <!-- Full-screen celebration overlay (brief flash on cake cut) -->
-            <div id="cake-celebration-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center pointer-events-none"
-                 style="opacity:0;transition:opacity 0.5s ease;background:radial-gradient(ellipse at center,rgba(159,18,57,0.3) 0%,rgba(0,0,0,0) 70%);">
-                <div id="cake-overlay-text" class="text-center px-6"
-                     style="transform:scale(0.7);transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1);">
-                    <div class="text-6xl sm:text-8xl mb-4" style="filter:drop-shadow(0 0 30px rgba(253,230,138,0.8));">🎂</div>
-                    <p class="font-script text-4xl sm:text-6xl" style="color:#fde68a;text-shadow:0 0 40px rgba(253,230,138,0.6);">1 Month!</p>
-                    <p class="text-slate-200 text-lg mt-2 font-serif">Sumit &amp; Akanksha ❤</p>
+                        <button id="btn-reset-cake" type="button" onclick="resetAnniversaryCake()"
+                            title="Reset cake ceremony"
+                            class="px-3.5 py-2.5 rounded-full bg-cosmos-800/80 hover:bg-cosmos-700 border border-stardust-200/25 text-stardust-200 text-xs font-medium hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
+                            <span>🔄</span>
+                            <span class="hidden sm:inline">Reset</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-
         </section>
         <section id="finale-section" class="py-16 sm:py-24 px-4 sm:px-6 relative">
             <div class="max-w-6xl mx-auto space-y-20">
@@ -1660,7 +1588,7 @@
 
             <div
                 class="relative rounded-2xl overflow-hidden bg-cosmos-950 mb-4 aspect-[4/3] flex items-center justify-center">
-                <img id="lightbox-img" src="" alt="Celestial Memory" class="w-full h-full object-cover" />
+                <img id="lightbox-img" src="" alt="Celestial Memory" draggable="false" class="w-full h-full object-cover" />
                 <!-- Prev / Next Lightbox Controls -->
                 <button type="button" onclick="stepLightboxPhoto(-1)"
                     class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-cosmos-950/75 hover:bg-cosmos-950 text-stardust-200 border border-stardust-200/30 flex items-center justify-center text-lg">
@@ -1694,7 +1622,7 @@
             anniversaryDateLabel: "11 November 2026",
             partnerName: "Akanksha",
             yourName: "Sumit",
-            musicUrl: null, // mp3 not present — falls back to built-in synth music box
+            musicUrl: "./photos/music.mp3",
 
             constellationQuotes: [
                 "Star #1 Connected: 11 October 2026 — The night the universe quietly whispered your name to my heart.",
@@ -2783,6 +2711,7 @@
                         <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-cosmos-950 mb-4 border border-stardust-200/15">
                             <img id="gallery-img-${idx}"
                                  src="${photo.src}"
+                                 draggable="false"
                                  onerror="this.onerror=null; this.src='${fallbackUri}';"
                                  alt="${photo.title}"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
@@ -3334,139 +3263,335 @@
         /* =====================================================================
            VIRTUAL 1-MONTH ANNIVERSARY CAKE CEREMONY LOGIC (#cake-section)
            ===================================================================== */
-        let cakeCeremonyState = 'candle_lit';
+        let cakeCeremonyState = 'candle_lit'; // 'candle_lit' | 'candle_blown' | 'cake_sliced'
+
+        function handleCakeStageClick() {
+            if (cakeCeremonyState === 'candle_lit') {
+                blowOutAnniversaryCandle();
+            } else if (cakeCeremonyState === 'candle_blown') {
+                sliceAnniversaryCake();
+            } else {
+                launchCakeCelebrationBite();
+            }
+        }
 
         function handleCandleDirectTap() {
-            if (cakeCeremonyState === 'candle_lit') blowOutAnniversaryCandle();
+            if (cakeCeremonyState === 'candle_lit') {
+                blowOutAnniversaryCandle();
+            }
         }
+
         function handleCandleBtnClick() {
-            if      (cakeCeremonyState === 'candle_lit')   blowOutAnniversaryCandle();
-            else if (cakeCeremonyState === 'candle_blown') sliceAnniversaryCake();
-            else                                           launchCakeCelebrationBite();
+            if (cakeCeremonyState === 'candle_lit') {
+                blowOutAnniversaryCandle();
+            } else if (cakeCeremonyState === 'candle_blown') {
+                sliceAnniversaryCake();
+            } else {
+                launchCakeCelebrationBite();
+            }
         }
 
         function blowOutAnniversaryCandle() {
             if (cakeCeremonyState !== 'candle_lit') return;
             cakeCeremonyState = 'candle_blown';
-            const flame     = document.getElementById('candle-flame-wrapper');
-            const smoke     = document.getElementById('candle-smoke');
-            const knife     = document.getElementById('cake-knife-graphic');
-            const instText  = document.getElementById('cake-instruction-text');
-            const btnCandle = document.getElementById('btn-candle-action');
-            const btnCut    = document.getElementById('btn-cut-action');
 
-            if (flame) { flame.style.transform = 'scale(0)'; flame.style.opacity = '0'; }
+            const flame = document.getElementById('candle-flame-wrapper');
+            const smoke = document.getElementById('candle-smoke');
+            const knife = document.getElementById('cake-knife-graphic');
+            const instText = document.getElementById('cake-instruction-text');
+            const btnCandle = document.getElementById('btn-candle-action');
+            const btnCut = document.getElementById('btn-cut-action');
+
+            // 1. Extinguish Flame with smooth vanish
+            if (flame) {
+                flame.style.transform = 'scale(0)';
+                flame.style.opacity = '0';
+            }
+
+            // 2. Smoke curls up and fades
             if (smoke) {
                 smoke.style.opacity = '1';
-                setTimeout(() => { smoke.style.opacity = '0'; smoke.style.transform = 'translateY(-20px)'; }, 1200);
+                smoke.style.transform = 'translateY(-18px)';
+                setTimeout(() => {
+                    smoke.style.opacity = '0';
+                    smoke.style.transform = 'translateY(-36px)';
+                }, 1200);
             }
-            [523.25, 659.25, 783.99, 1046.5].forEach((f, i) =>
-                setTimeout(() => playCelestialNote(f, 0.17), i * 100));
-            const stage = document.getElementById('cake-interactive-stage');
-            if (stage) {
-                const r = stage.getBoundingClientRect();
-                spawnStardustBurst(r.left + r.width / 2, r.top + 80, 22);
+
+            // 3. Audio wind chime
+            [659.25, 783.99, 987.77, 1318.51].forEach((f, i) => {
+                setTimeout(() => playCelestialNote(f, 0.22), i * 110);
+            });
+
+            // 4. Stardust sparkles over candle
+            const cakeStage = document.getElementById('cake-interactive-stage');
+            if (cakeStage) {
+                const rect = cakeStage.getBoundingClientRect();
+                spawnStardustBurst(rect.left + rect.width / 2, rect.top + 90, 25);
             }
-            if (knife) { knife.style.opacity = '1'; knife.style.transform = 'translate(0px,30px) rotate(-18deg)'; }
-            if (instText) { instText.textContent = 'Your wish floats up to the stars \u2728 Now take the knife and slice our cake together!'; instText.style.color = '#fde68a'; }
+
+            // 5. Knife floats into ready slicing position
+            if (knife) {
+                knife.style.opacity = '1';
+                knife.style.transform = 'translate(195px, 50px) rotate(-15deg)';
+            }
+
+            // 6. Update text and button states
+            if (instText) {
+                instText.textContent = "Your wish is whispered to the stars! Now take the knife to slice our 1-month cake together! 🍰";
+                instText.classList.add('text-stardust-200');
+            }
+
             if (btnCandle) {
-                btnCandle.innerHTML = '<span>\u2728</span><span>Wish Made!</span>';
-                btnCandle.style.background = 'linear-gradient(135deg,#10b981,#059669)';
-                btnCandle.style.color = '#ffffff';
-                btnCandle.style.boxShadow = '0 4px 20px rgba(16,185,129,0.4)';
-                btnCandle.style.pointerEvents = 'none';
+                btnCandle.innerHTML = '<span>✨</span><span>Wish Made!</span>';
+                btnCandle.classList.remove('from-stardust-400', 'via-amber-400', 'to-stardust-500');
+                btnCandle.classList.add('from-emerald-500', 'to-teal-600', 'text-white');
             }
-            if (btnCut) { btnCut.classList.remove('opacity-40','pointer-events-none'); btnCut.classList.add('animate-pulse'); }
+
+            if (btnCut) {
+                btnCut.classList.remove('opacity-50', 'pointer-events-none');
+                btnCut.classList.add('animate-pulse', 'scale-105');
+            }
         }
 
         function sliceAnniversaryCake() {
-            if (cakeCeremonyState === 'cake_sliced') { launchCakeCelebrationBite(); return; }
-            cakeCeremonyState = 'cake_sliced';
-            const knife        = document.getElementById('cake-knife-graphic');
-            const cutReveal    = document.getElementById('cake-cut-reveal');
-            const servedPlate  = document.getElementById('served-slice-plate');
-            const congratsCard = document.getElementById('cake-congrats-card');
-            const instText     = document.getElementById('cake-instruction-text');
-            const btnCut       = document.getElementById('btn-cut-action');
-
-            if (knife) {
-                knife.style.transition = 'opacity 0.6s ease,transform 0.5s cubic-bezier(0.25,1,0.5,1)';
-                knife.style.transform = 'translate(0px,120px) rotate(0deg)';
-                setTimeout(() => { knife.style.transform = 'translate(30px,90px) rotate(28deg)'; knife.style.opacity = '0'; }, 700);
+            if (cakeCeremonyState === 'cake_sliced') {
+                launchCakeCelebrationBite();
+                return;
             }
-            playCelestialNote(392, 0.1);
-            setTimeout(() => { [523.25,659.25,783.99,880,1046.5].forEach((f,i) => setTimeout(() => playCelestialNote(f,0.24), i*80)); }, 320);
-            if (cutReveal) setTimeout(() => { cutReveal.style.opacity = '1'; }, 480);
-            if (servedPlate) setTimeout(() => { servedPlate.style.opacity='1'; servedPlate.style.transform='translateY(0) scale(1)'; servedPlate.style.pointerEvents='auto'; }, 750);
-            if (congratsCard) setTimeout(() => { congratsCard.style.opacity='1'; congratsCard.style.transform='scale(1) translateY(0)'; congratsCard.style.pointerEvents='auto'; }, 950);
+            cakeCeremonyState = 'cake_sliced';
+
+            const knife = document.getElementById('cake-knife-graphic');
+            const cutLine = document.getElementById('cake-cut-line');
+            const servedPlate = document.getElementById('served-slice-plate');
+            const congratsCard = document.getElementById('cake-congrats-card');
+            const instText = document.getElementById('cake-instruction-text');
+            const btnCut = document.getElementById('btn-cut-action');
+
+            // 1. Knife slices down through the cake
+            if (knife) {
+                knife.style.transition = 'transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.3s';
+                knife.style.transform = 'translate(190px, 125px) rotate(0deg)';
+                setTimeout(() => {
+                    knife.style.transform = 'translate(190px, 220px) rotate(0deg)';
+                }, 220);
+                setTimeout(() => {
+                    knife.style.transform = 'translate(250px, 180px) rotate(35deg)';
+                    knife.style.opacity = '0';
+                }, 850);
+            }
+
+            // 2. Sound: Slicing whoosh + celebratory chords
+            playCelestialNote(440, 0.12);
             setTimeout(() => {
-                const overlay = document.getElementById('cake-celebration-overlay');
-                const overlayTxt = document.getElementById('cake-overlay-text');
-                if (overlay) {
-                    overlay.style.opacity = '1';
-                    if (overlayTxt) overlayTxt.style.transform = 'scale(1)';
-                    setTimeout(() => { overlay.style.opacity='0'; if(overlayTxt) overlayTxt.style.transform='scale(0.7)'; }, 2200);
-                }
-            }, 600);
+                [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f, i) => {
+                    setTimeout(() => playCelestialNote(f, 0.28), i * 90);
+                });
+            }, 300);
+
+            // 3. Reveal cut wedge line
+            if (cutLine) {
+                setTimeout(() => {
+                    cutLine.style.opacity = '0.9';
+                }, 400);
+            }
+
+            // 4. Slide out dessert plate with the cake slice
+            if (servedPlate) {
+                setTimeout(() => {
+                    servedPlate.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    servedPlate.classList.add('opacity-100', 'translate-y-0');
+                }, 750);
+            }
+
+            // 5. Reveal anniversary congrats note
+            if (congratsCard) {
+                setTimeout(() => {
+                    congratsCard.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                    congratsCard.classList.add('opacity-100', 'scale-100');
+                }, 900);
+            }
+
+            // 6. Celebratory stardust bursts
             setTimeout(() => {
                 const stage = document.getElementById('cake-interactive-stage');
                 if (stage) {
-                    const r = stage.getBoundingClientRect();
-                    spawnStardustBurst(r.left+r.width/2-70, r.top+r.height/2, 30);
-                    spawnStardustBurst(r.left+r.width/2+70, r.top+r.height/2, 30);
-                    spawnStardustBurst(r.left+r.width/2, r.top+r.height/2-50, 35);
+                    const rect = stage.getBoundingClientRect();
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top + rect.height / 2;
+                    spawnStardustBurst(cx - 80, cy, 30);
+                    spawnStardustBurst(cx + 80, cy, 30);
+                    spawnStardustBurst(cx, cy - 60, 35);
                 }
-                launchCelestialFireworks(6);
-            }, 650);
-            if (instText) setTimeout(() => { instText.textContent='Happy 1 Month, Akanksha! The first sweet bite is all yours. \u2764\uFE0F\uD83C\uDF70'; instText.style.color=''; }, 1000);
-            if (btnCut)   setTimeout(() => { btnCut.classList.remove('animate-pulse'); btnCut.innerHTML='<span>\uD83C\uDF70</span><span>Feed Another Bite!</span>'; }, 1100);
+                launchCelestialFireworks(5);
+            }, 600);
+
+            // 7. Update instructions and button text
+            if (instText) {
+                instText.textContent = "Happy 1 Month, Akanksha! The first sweet bite is dedicated to you. ❤️🍰";
+            }
+
+            if (btnCut) {
+                btnCut.classList.remove('animate-pulse');
+                btnCut.innerHTML = '<span>🍰</span><span>Feed Another Bite!</span>';
+            }
         }
 
         function launchCakeCelebrationBite() {
-            [659.25,783.99,987.77,1174.66,1318.51].forEach((f,i) => setTimeout(() => playCelestialNote(f,0.17), i*65));
-            launchCelestialFireworks(3);
-            const plate = document.getElementById('served-slice-plate');
-            if (plate) { plate.style.transform='translateY(-8px) scale(1.1)'; setTimeout(() => { plate.style.transform='translateY(0) scale(1)'; }, 300); }
+            // Celebratory sound and stardust shower
+            [659.25, 783.99, 987.77, 1174.66, 1318.51].forEach((f, i) => {
+                setTimeout(() => playCelestialNote(f, 0.2), i * 70);
+            });
+            launchCelestialFireworks(4);
+
+            const servedPlate = document.getElementById('served-slice-plate');
+            if (servedPlate) {
+                servedPlate.classList.remove('scale-100');
+                servedPlate.classList.add('scale-110');
+                setTimeout(() => {
+                    servedPlate.classList.remove('scale-110');
+                    servedPlate.classList.add('scale-100');
+                }, 250);
+            }
         }
 
         function resetAnniversaryCake() {
             cakeCeremonyState = 'candle_lit';
-            const flame        = document.getElementById('candle-flame-wrapper');
-            const smoke        = document.getElementById('candle-smoke');
-            const knife        = document.getElementById('cake-knife-graphic');
-            const cutReveal    = document.getElementById('cake-cut-reveal');
-            const servedPlate  = document.getElementById('served-slice-plate');
-            const congratsCard = document.getElementById('cake-congrats-card');
-            const instText     = document.getElementById('cake-instruction-text');
-            const btnCandle    = document.getElementById('btn-candle-action');
-            const btnCut       = document.getElementById('btn-cut-action');
 
-            if (flame)  { flame.style.transform='scale(1)'; flame.style.opacity='1'; }
-            if (smoke)  { smoke.style.opacity='0'; smoke.style.transform=''; }
-            if (knife)  { knife.style.opacity='0'; knife.style.transform='translate(55px,-10px) rotate(-30deg)'; knife.style.transition='opacity 0.6s ease,transform 0.7s cubic-bezier(0.34,1.56,0.64,1)'; }
-            if (cutReveal)    { cutReveal.style.opacity='0'; }
-            if (servedPlate)  { servedPlate.style.opacity='0'; servedPlate.style.transform='translateY(16px) scale(0.9)'; servedPlate.style.pointerEvents='none'; }
-            if (congratsCard) { congratsCard.style.opacity='0'; congratsCard.style.transform='scale(0.92) translateY(16px)'; congratsCard.style.pointerEvents='none'; }
-            if (instText)     { instText.textContent='Blow out the candle, make your secret wish \u2014 then slice our cake together to celebrate one beautiful month. \uD83D\uDD6F\uFE0F'; instText.style.color=''; }
+            const flame = document.getElementById('candle-flame-wrapper');
+            const smoke = document.getElementById('candle-smoke');
+            const knife = document.getElementById('cake-knife-graphic');
+            const cutLine = document.getElementById('cake-cut-line');
+            const servedPlate = document.getElementById('served-slice-plate');
+            const congratsCard = document.getElementById('cake-congrats-card');
+            const instText = document.getElementById('cake-instruction-text');
+            const btnCandle = document.getElementById('btn-candle-action');
+            const btnCut = document.getElementById('btn-cut-action');
+
+            if (flame) {
+                flame.style.transform = 'scale(1)';
+                flame.style.opacity = '1';
+            }
+            if (smoke) {
+                smoke.style.opacity = '0';
+                smoke.style.transform = 'translateY(0px)';
+            }
+            if (knife) {
+                knife.style.opacity = '0';
+                knife.style.transform = 'translate(265px, 20px) rotate(-35deg)';
+            }
+            if (cutLine) {
+                cutLine.style.opacity = '0';
+            }
+            if (servedPlate) {
+                servedPlate.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                servedPlate.classList.remove('opacity-100', 'translate-y-0');
+            }
+            if (congratsCard) {
+                congratsCard.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                congratsCard.classList.remove('opacity-100', 'scale-100');
+            }
+            if (instText) {
+                instText.textContent = "No anniversary is complete without cutting a cake! Make your wish, tap the glowing candle to blow it out, and slice our 1-month celebration cake together. 🕯️✨";
+                instText.classList.remove('text-stardust-200');
+            }
             if (btnCandle) {
-                btnCandle.innerHTML='<span>\uD83D\uDD6F\uFE0F</span><span>Make a Wish &amp; Blow Candle</span>';
-                btnCandle.style.background='linear-gradient(135deg,#fde68a,#f59e0b,#d97706)';
-                btnCandle.style.color='#451a03';
-                btnCandle.style.boxShadow='0 4px 20px rgba(245,158,11,0.4)';
-                btnCandle.style.pointerEvents='';
+                btnCandle.innerHTML = '<span>🕯️</span><span>Make a Wish &amp; Blow Candle</span>';
+                btnCandle.classList.remove('from-emerald-500', 'to-teal-600', 'text-white');
+                btnCandle.classList.add('from-stardust-400', 'via-amber-400', 'to-stardust-500', 'text-cosmos-950');
             }
             if (btnCut) {
-                btnCut.innerHTML='<span>\uD83D\uDD2A</span><span>Cut the Cake</span>';
-                btnCut.classList.add('opacity-40','pointer-events-none');
-                btnCut.classList.remove('animate-pulse');
+                btnCut.innerHTML = '<span>🔪</span><span>Cut the Cake</span>';
+                btnCut.classList.add('opacity-50', 'pointer-events-none');
+                btnCut.classList.remove('animate-pulse', 'scale-105');
             }
-            playCelestialNote(523.25, 0.12);
+            playCelestialNote(523.25, 0.15);
+        }
+
+        /* =====================================================================
+           INTERACTION & CONTENT GUARDS (Right-click, Image Drag, Selection, Screenshot Shortcuts)
+           ===================================================================== */
+        let protectionToastTimer = null;
+        let screenshotShieldTimer = null;
+
+        function showProtectionWarning(msg) {
+            const toast = document.getElementById('celestial-protection-toast');
+            const textEl = document.getElementById('celestial-protection-toast-text');
+            if (textEl && msg) textEl.textContent = msg;
+
+            if (toast) {
+                toast.classList.remove('opacity-0', '-translate-y-4');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                clearTimeout(protectionToastTimer);
+                protectionToastTimer = setTimeout(() => {
+                    toast.classList.add('opacity-0', '-translate-y-4');
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                }, 3400);
+            }
+
+            document.body.classList.add('screenshot-shield');
+            clearTimeout(screenshotShieldTimer);
+            screenshotShieldTimer = setTimeout(() => {
+                document.body.classList.remove('screenshot-shield');
+            }, 1500);
+        }
+
+        function isScreenshotShortcut(e) {
+            const key = (e.key || '').toLowerCase();
+            if (key === 'printscreen' || e.code === 'PrintScreen' || e.keyCode === 44) return true;
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && ['3', '4', '5', '6', 's'].includes(key)) return true;
+            return false;
+        }
+
+        function initContentInteractionGuards() {
+            // 1. Disable right-click context menu
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            });
+
+            // 2. Disable image dragging
+            document.addEventListener('dragstart', (e) => {
+                const target = e.target;
+                if (target && (target.tagName === 'IMG' || (target.closest && target.closest('img')))) {
+                    e.preventDefault();
+                }
+            });
+
+            // 3. Guard secret content against text selection & copy
+            const secretSelector = '[data-secret], #constellation-whisper-text, #letter-section, #letter-modal, #journey-section, #jar-section, #scratch-section, #memories-section, #cake-section, #reasons-flip-grid, #runaway-card-arena, #photo-lightbox';
+            document.addEventListener('selectstart', (e) => {
+                const target = e.target;
+                if (!target || !target.closest) return;
+                if (target.closest('input, textarea')) return;
+                if (target.closest(secretSelector)) {
+                    e.preventDefault();
+                }
+            });
+            document.addEventListener('copy', (e) => {
+                const sel = window.getSelection ? window.getSelection() : null;
+                const anchor = sel && sel.anchorNode ? (sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentElement : sel.anchorNode) : e.target;
+                if (anchor && anchor.closest && !anchor.closest('input, textarea') && anchor.closest(secretSelector)) {
+                    e.preventDefault();
+                }
+            });
+
+            // 4. Warn on common screenshot keyboard shortcuts
+            const handleShortcut = (e) => {
+                if (isScreenshotShortcut(e)) {
+                    e.preventDefault();
+                    showProtectionWarning("Screenshots are discouraged — this surprise is meant to be experienced live ✨");
+                }
+            };
+            window.addEventListener('keydown', handleShortcut, true);
+            window.addEventListener('keyup', handleShortcut, true);
         }
 
         /* =====================================================================
            INITIALIZE ALL CELESTIAL SYSTEMS ON WINDOW LOAD
            ===================================================================== */
         window.onload = function () {
+            initContentInteractionGuards();
+
             // 1. Initialize Astral Midnight Countdown Lock Screen (11 Nov 2026 00:00:00)
             initAstralCountdownLock();
 
